@@ -1,0 +1,1361 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#081116">
+  <meta name="description" content="ВолнаЛаб — интерактивная 2D лаборатория звука: волны, частота, материалы, препятствия и измерительные приборы.">
+  <title>ВолнаЛаб — 2D лаборатория звука</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='14' fill='%23081116'/%3E%3Cpath d='M11 24h5l5-9 7 18 5-13 4 4h3' fill='none' stroke='%23adff69' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <style>
+    :root{color-scheme:dark;--bg:#081116;--surface:#101b21;--surface-2:#142229;--line:#24353d;--muted:#91a3aa;--text:#edf4ef;--green:#b5ff74;--cyan:#67e9dd;--orange:#ffb760;--radius:14px;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -24%,#19333a 0%,var(--bg) 53%);color:var(--text);min-width:320px;min-height:100vh}button,input,select{font:inherit}button{color:inherit}.app{max-width:1600px;margin:auto;padding:22px clamp(14px,2.3vw,34px) 30px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#b5ff7414;border:1px solid #b5ff7433;color:var(--green)}.brand-mark svg{width:23px;height:23px}.eyebrow,.section-kicker{color:var(--muted);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.brand h1{margin:2px 0 0;font-size:19px;letter-spacing:-.02em}.top-actions{display:flex;align-items:center;gap:10px}.model-tag{font-size:12px;color:#bfd0d3;border:1px solid var(--line);background:#0c171b;padding:8px 10px;border-radius:9px}.btn{min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:10px;background:#132027;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:.18s ease}.btn:hover{border-color:#668177;background:#192a2f}.btn:focus-visible,.tool-btn:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--green);outline-offset:2px}.btn-primary{background:var(--green);border-color:var(--green);color:#10200f;font-weight:750}.btn-primary:hover{background:#c7ff97;border-color:#c7ff97}.btn svg{width:16px;height:16px}.layout{display:grid;grid-template-columns:minmax(250px,300px) minmax(0,1fr);gap:16px;align-items:stretch}.panel,.stage{background:linear-gradient(145deg,#111d23f5,#0d171c);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 18px 50px #0002}.panel{padding:18px;display:flex;flex-direction:column;gap:19px}.block{padding-bottom:17px;border-bottom:1px solid var(--line)}.block:last-child{border:0;padding:0}.block-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.block-head h2{font-size:14px;margin:0;font-weight:720}.small-note{font-size:12px;color:var(--muted)}.toolbar{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.tool-btn{min-height:58px;border:1px solid #26373d;border-radius:10px;background:#0d171b;color:#9eafb1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer}.tool-btn svg{width:18px;height:18px}.tool-btn span{font-size:11px}.tool-btn:hover{background:#17262b;color:var(--text)}.tool-btn[aria-pressed="true"]{border-color:#95d65f80;background:#b5ff7414;color:var(--green);box-shadow:inset 0 0 0 1px #b5ff741a}.control{margin-top:13px}.control:first-child{margin-top:0}.control-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.control label,.control-label{font-size:13px;color:#dce6e1}.value{color:var(--green);font-size:12px;font-variant-numeric:tabular-nums}.slider-line{display:flex;align-items:center;gap:10px}.slider-line input{width:100%;accent-color:var(--green);cursor:pointer}.slider-end{font-size:11px;color:#71858a;min-width:32px}.range-pair{display:flex;justify-content:space-between;color:#6f8389;font-size:10px;margin-top:1px}.select{width:100%;height:40px;padding:0 11px;border:1px solid var(--line);border-radius:9px;background:#0c171c;color:var(--text)}.mat-note{font-size:11px;color:var(--muted);line-height:1.5;margin:8px 0 0}.readout{display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{padding:10px 11px;border:1px solid #203138;border-radius:10px;background:#0b1519}.metric-name{font-size:11px;color:var(--muted)}.metric-value{margin-top:4px;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}.legend{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px;margin-top:10px}.legend-bar{height:6px;flex:1;border-radius:9px;background:linear-gradient(90deg,#12252b,#087b87,#83d9a6,#dbff80,#ffe6a0)}.stage{padding:13px;min-width:0;display:flex;flex-direction:column;gap:10px}.stage-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 2px 0}.scene-title{font-size:13px;font-weight:700}.scene-caption{font-size:11px;color:var(--muted);margin-top:3px}.stage-tools{display:flex;align-items:center;gap:7px}.icon-btn{width:36px;height:36px;padding:0;border:1px solid var(--line);border-radius:9px;background:#101b20;display:grid;place-items:center;cursor:pointer;color:#a9bab9}.icon-btn:hover{color:var(--green);border-color:#6e8c70}.icon-btn svg{width:17px;height:17px}.canvas-wrap{position:relative;width:100%;aspect-ratio:3/2;min-height:0;flex:0 0 auto;border:1px solid #263a40;border-radius:11px;overflow:hidden;background:#071115}.canvas-wrap canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}.canvas-overlay{position:absolute;left:14px;top:13px;pointer-events:none;display:flex;align-items:center;gap:7px;padding:7px 9px;border:1px solid #263e42;border-radius:8px;background:#09171bd9;backdrop-filter:blur(8px);font-size:11px;color:#c8d7d1}.legend-dot{width:7px;height:7px;background:var(--green);border-radius:99px;box-shadow:0 0 10px var(--green)}.scale{position:absolute;right:14px;bottom:13px;pointer-events:none;color:#92a9a8;background:#09171bd9;border:1px solid #263e42;border-radius:7px;padding:6px 8px;font-size:10px}.canvas-hint{position:absolute;left:14px;bottom:13px;pointer-events:none;font-size:10px;color:#819394}.stage-footer{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 2px;color:var(--muted);font-size:11px}.play-state{display:flex;align-items:center;gap:7px}.state-dot{width:7px;height:7px;border-radius:50%;background:#718486}.state-dot.on{background:var(--green);box-shadow:0 0 9px #b5ff7499}.mobile-tools{display:none}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,12px);padding:10px 14px;border-radius:10px;background:#203036;border:1px solid #3a555a;color:#eaf3ee;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:5}.toast.show{opacity:1;transform:translate(-50%,0)}
+    .layer-preset{width:100%;margin-top:9px;min-height:38px;padding:6px 9px;font-size:11px;color:#cbd9d2}@media(max-width:900px){.layout{grid-template-columns:1fr}.panel{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:0 16px}.block{padding:16px 0;border-bottom:1px solid var(--line)}.block:nth-child(odd){padding-right:14px}.block:nth-child(even){padding-left:14px;border-left:1px solid var(--line)}.block:last-child{border-bottom:0}.canvas-wrap{min-height:0;max-height:none}.stage{min-height:0}}
+    @media(max-width:560px){.layout{display:flex;flex-direction:column}.panel{display:contents}.panel>.block:nth-child(1){order:1}.stage{order:2}.panel>.block:nth-child(2){order:3}.panel>.block:nth-child(3){order:4}.panel>.block:nth-child(4){order:5}.app{padding:13px 11px 18px}.topbar{align-items:flex-start;margin-bottom:12px}.brand-mark{width:37px;height:37px}.brand h1{font-size:16px}.eyebrow{font-size:10px}.model-tag{display:none}.top-actions{gap:6px}.btn{min-height:37px;padding:0 10px;font-size:12px}.layout{gap:10px}.stage{padding:9px;min-height:auto;gap:8px}.stage-top{align-items:flex-start}.scene-caption{max-width:210px;line-height:1.4}.stage-tools{gap:5px}.icon-btn{width:33px;height:33px}.canvas-wrap{min-height:0;max-height:none;aspect-ratio:3/2}.panel{display:contents;padding:0;grid-template-columns:1fr;gap:0}.block,.block:nth-child(odd),.block:nth-child(even){padding:14px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,#111d23f5,#0d171c)}.block:first-child{padding-top:14px}.block:last-child{padding-bottom:14px}.toolbar{grid-template-columns:repeat(4,1fr)}.stage-footer{font-size:10px}.canvas-hint{max-width:60%;line-height:1.35}.scale{right:9px;bottom:9px}.canvas-overlay{left:9px;top:9px}.mobile-tools{display:block;color:var(--muted);font-size:11px;margin-top:-3px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+    .source-list{display:flex;flex-direction:column;gap:6px;margin-top:11px}.source-row{display:grid;grid-template-columns:minmax(0,1fr) 26px;align-items:center;gap:6px;width:100%;padding:6px 7px;border:1px solid #23363c;border-radius:9px;background:#0c171b}.source-row[aria-pressed="true"]{border-color:#b5ff7488;background:#b5ff7410}.source-pick{display:grid;grid-template-columns:10px minmax(0,1fr) auto;align-items:center;gap:8px;min-width:0;width:100%;padding:2px;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}.source-pick[aria-pressed="true"] .source-name{color:var(--green)}.source-dot{width:8px;height:8px;border-radius:50%;box-shadow:0 0 9px currentColor}.source-name{font-size:12px;font-weight:650}.source-meta{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}.source-remove{width:25px;height:25px;border:0;border-radius:6px;background:transparent;color:#9baaad;cursor:pointer;font-size:17px;line-height:1}.source-remove:hover{background:#e7686822;color:#ff9a91}.material-data{padding:9px 10px;border:1px solid #203138;border-radius:9px;background:#0b1519;color:#adbdba;font-size:11px;line-height:1.5;margin-top:8px}.meter{width:100%;height:5px;border-radius:8px;background:#25363b;overflow:hidden;margin-top:6px}.meter-fill{height:100%;background:linear-gradient(90deg,#647e85,#b5ff74);border-radius:8px}.wave-legend{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px;color:#b7c5c2;font-size:10px}.wave-neg,.wave-pos{display:flex;align-items:center;gap:5px}.wave-neg i,.wave-pos i,.wave-zero i{display:inline-block;width:8px;height:8px;border-radius:50%}.wave-neg i{background:#55b8ff}.wave-pos i{background:#ffbf66}.wave-zero i{background:#28404a}.material-pill{border:1px solid #34474a;border-radius:6px;padding:3px 6px;font-size:10px;color:#c8d5d0}
+    .layout{grid-template-columns:minmax(215px,255px) minmax(0,1fr);gap:12px}.panel{padding:14px;gap:14px}.block{padding-bottom:13px}.toolbar{grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}.tool-btn{min-height:52px;border-radius:9px}.tool-btn span{font-size:10px}.canvas-wrap{aspect-ratio:3/2}
+    @media(max-width:900px){.toolbar{grid-template-columns:repeat(5,minmax(0,1fr))}}
+    @media(max-width:560px){.toolbar{grid-template-columns:repeat(5,minmax(0,1fr))}.tool-btn{min-height:48px}.tool-btn span{font-size:9px}.canvas-wrap{aspect-ratio:3/2}}
+    .zoom-controls{position:absolute;top:11px;right:11px;z-index:2;display:flex;align-items:center;gap:4px;padding:4px;border:1px solid #263e42;border-radius:9px;background:#09171bd9;backdrop-filter:blur(8px)}.zoom-btn,.zoom-value{height:28px;border:0;border-radius:6px;background:#15252a;color:#d9e6de;cursor:pointer}.zoom-btn{width:29px;font-size:19px;line-height:1}.zoom-value{min-width:48px;padding:0 6px;color:var(--green);font-size:11px;font-variant-numeric:tabular-nums}.zoom-btn:hover,.zoom-value:hover{background:#22373b}.zoom-btn:focus-visible,.zoom-value:focus-visible{outline:2px solid var(--green);outline-offset:1px}
+    .camera-controls{position:absolute;top:51px;right:11px;z-index:2;display:grid;grid-template-columns:repeat(3,25px);grid-template-rows:repeat(3,25px);gap:2px;padding:4px;border:1px solid #263e42;border-radius:9px;background:#09171bd9;backdrop-filter:blur(8px)}.camera-btn{padding:0;border:0;border-radius:5px;background:#15252a;color:#d9e6de;font-size:16px;line-height:1;cursor:pointer}.camera-btn:hover{background:#22373b;color:var(--green)}.camera-btn:focus-visible{outline:2px solid var(--green);outline-offset:1px}.camera-up{grid-column:2;grid-row:1}.camera-left{grid-column:1;grid-row:2}.camera-center{grid-column:2;grid-row:2;font-size:13px}.camera-right{grid-column:3;grid-row:2}.camera-down{grid-column:2;grid-row:3}
+    @media(max-width:560px){.zoom-controls{top:8px;right:8px}.zoom-btn{width:26px;height:26px}.zoom-value{height:26px;min-width:43px}}
+    @media(max-width:560px){.camera-controls{top:46px;right:8px;grid-template-columns:repeat(3,23px);grid-template-rows:repeat(3,23px)}}
+    .map-grow{width:100%;min-height:36px;margin-top:7px;font-size:11px;border-color:#54704b;color:#cfffaa}
+    .frequency-preview{width:100%;height:48px;display:block;margin-top:8px;border:1px solid #254047;border-radius:7px;background:#0a171b}.frequency-caption{margin-top:4px;color:#91aaa5;font-size:10px}.glass-tune{width:100%;margin-top:8px;min-height:36px;color:#b8eff8;border-color:#427582;font-size:11px}.glass-tune[hidden]{display:none}
+    .equipment-place{width:100%;margin-top:8px;min-height:38px;color:#c8eeff;border-color:#3b6e7d}.equipment-readout{margin-top:11px;padding:11px;border:1px solid #32505b;border-radius:10px;background:#0b191f}.equipment-readout[hidden],.equipment-chart[hidden]{display:none}.equipment-readout-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.equipment-name{font-size:11px;color:#c6d9d8}.equipment-value{font-size:17px;font-weight:750;color:#b5ff74;white-space:nowrap}.equipment-description{margin:6px 0 0;color:#9db5b3;font-size:11px;line-height:1.45}.equipment-chart{display:block;width:100%;height:66px;margin-top:9px;border:1px solid #29434a;border-radius:6px}
+    .toolbar{grid-template-columns:repeat(3,minmax(0,1fr))}.context-panel[hidden]{display:none}.context-panel{animation:panel-in .16s ease-out}@keyframes panel-in{from{opacity:.5;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}@media(max-width:900px){.toolbar{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:560px){.toolbar{grid-template-columns:repeat(3,minmax(0,1fr))}.tool-btn{min-height:48px}.tool-btn span{font-size:10px}}
+    .sweep-btn{width:100%;margin-top:9px;min-height:36px;color:#cdeaff;border-color:#477484;font-size:11px}.sweep-btn[hidden]{display:none}.pulse-btn{width:100%;margin-top:9px;min-height:38px;color:#dfffbf;border-color:#6a9d55;font-size:12px;font-weight:700}.pulse-btn[hidden],#pulseHint[hidden]{display:none}
+    .stage-footer{align-items:center;flex-wrap:wrap}.stage-status{display:flex;flex-direction:column;gap:4px;min-width:180px}.stage-status #soundState{font-size:10px;line-height:1.25}.map-wave-controls{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:5px;margin-left:auto;padding:5px 6px;border:1px solid #34534c;border-radius:9px;background:#0b191d}.map-source-select{width:112px;height:29px;padding:0 6px;border:1px solid #365049;border-radius:6px;background:#14252a;color:#e5f4e8;font-size:11px}.map-wave-switch{display:flex;gap:4px}.map-wave-mode{min-height:29px;padding:2px 7px;border:1px solid #344b4a;border-radius:6px;background:#132429;color:#bbcfcc;font-size:10px;white-space:nowrap;cursor:pointer}.map-wave-mode[aria-pressed="true"]{border-color:#a5dd77;background:#b5ff7426;color:#dbffbd;font-weight:700}.map-pulse-btn{min-height:29px;padding:2px 9px;border:1px solid #a5dd77;border-radius:6px;background:#b5ff74;color:#10200f;font-size:10px;font-weight:750;white-space:nowrap;cursor:pointer}.map-pulse-btn:hover{background:#d0ffa8}.map-pulse-btn[hidden]{display:none}.map-pulse-btn.secondary{background:#18302a;color:#d5ffbb}.map-pulse-btn.secondary:hover{background:#264235}@media(max-width:900px){.stage-status{min-width:130px}.map-wave-controls{max-width:100%}}@media(max-width:560px){.stage-footer{align-items:flex-start}.stage-status{width:100%}.map-wave-controls{width:100%;justify-content:flex-end}.map-source-select{flex:1;min-width:105px}.map-wave-mode{font-size:9px}}
+    .equipment-coordinates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.equipment-coordinates[hidden]{display:none}.equipment-coordinates label{display:flex;flex-direction:column;gap:5px;color:#a9bfbc;font-size:11px}.equipment-coordinates input{width:100%;height:34px;padding:0 8px;border:1px solid #34535b;border-radius:7px;background:#0c1c22;color:#ebf5ee}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3 12h3l3-6 4 12 3-9 2 3h3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div><div class="eyebrow">Интерактивная модель</div><h1>ВолнаЛаб</h1></div>
+      </div>
+      <div class="top-actions">
+        <span class="model-tag">2D · акустическое поле</span>
+        <button class="btn" id="pauseBtn" type="button" aria-label="Приостановить симуляцию"><span id="pauseIcon">Ⅱ</span><span id="pauseText">Пауза</span></button>
+        <button class="btn" id="resetBtn" type="button" aria-label="Сбросить сцену"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7v5h5M5.5 16a8 8 0 1 0 .1-8.2L4 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Сбросить</span></button>
+        <button class="btn btn-primary" id="soundBtn" type="button"><svg id="soundIcon" viewBox="0 0 24 24" fill="none"><path d="M4 10v4h4l5 4V6l-5 4H4Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M16 9a5 5 0 0 1 0 6m2-9a9 9 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span id="soundBtnText">Включить звук</span></button>
+      </div>
+    </header>
+    <section class="layout" aria-label="Панель акустической симуляции">
+      <aside class="panel" aria-label="Настройки сцены">
+        <section class="block">
+          <div class="block-head"><h2>Инструмент сцены</h2><span class="small-note" id="sourcesCount">1 источник</span></div>
+          <div class="toolbar" role="group" aria-label="Выберите инструмент">
+            <button class="tool-btn" type="button" data-tool="source" aria-pressed="true" title="Добавить источник звука"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2.1 2.1m9.8 9.8L19 19M19 5l-2.1 2.1m-9.8 9.8L5 19" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><span>Звук</span></button>
+            <button class="tool-btn" type="button" data-tool="wall" aria-pressed="false" title="Нарисовать стену перетаскиванием"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4h16v16H4zM4 9h16M4 15h16M9 4v5m6 0v6m-6 0v5m6-16v5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span>Стена</span></button>
+            <button class="tool-btn" type="button" data-tool="object" aria-pressed="false" title="Добавить предмет интерьера или звукопоглотитель"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m4.5 7.8 7.5 4.4 7.5-4.4M12 12.2V21" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>Объект</span></button>
+            <button class="tool-btn" type="button" data-tool="equipment" aria-pressed="false" title="Поставить специальный прибор или акустическое оборудование"><svg viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 13h2l1.5-4 2 6 1.5-3H17M9 21h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Приборы</span></button>
+            <button class="tool-btn" type="button" data-tool="erase" aria-pressed="false" title="Удалить стену или предмет"><svg viewBox="0 0 24 24" fill="none"><path d="m4 14 8-9a2 2 0 0 1 2.8-.2l4.4 3.8a2 2 0 0 1 .2 2.8L12 20H7l-3-3a2 2 0 0 1 0-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m9 20 7-8" stroke="currentColor" stroke-width="1.6"/></svg><span>Стереть</span></button>
+            <button class="tool-btn" type="button" data-tool="pan" aria-pressed="false" title="Выбрать источник, стену, объект или прибор и открыть его настройки"><svg viewBox="0 0 24 24" fill="none"><path d="M8 11V6a1.5 1.5 0 0 1 3 0v4-6a1.5 1.5 0 0 1 3 0v6-5a1.5 1.5 0 0 1 3 0v7-3a1.5 1.5 0 0 1 3 0v6a7 7 0 0 1-7 7h-1a7 7 0 0 1-5.6-2.8L3 15a1.7 1.7 0 0 1 2.6-2.1L8 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Выбрать</span></button>
+          </div>
+          <p class="mat-note" id="toolHint">Щёлкните по полю, чтобы добавить источник. Выберите «Стена» и протяните её поперёк комнаты.</p>
+          <div class="source-list" id="sourceList" aria-label="Источники звука"></div>
+        </section>
+        <section class="block context-panel" id="signalPanel">
+          <div class="block-head"><h2>Параметры сигнала</h2><span class="small-note" id="selectedSourceLabel">источник 01</span></div>
+          <div class="control"><div class="control-row"><label for="waveType">Форма сигнала</label></div><select class="select" id="waveType"><option value="sine">Чистый тон</option><option value="square">Прямоугольная</option><option value="sawtooth">Пилообразная</option><option value="noise">Белый шум</option></select></div>
+          <div class="control"><div class="control-row"><label for="emissionMode">Режим источника</label></div><select class="select" id="emissionMode"><option value="continuous">Постоянный звук</option><option value="pulse">Одна волна</option></select><button class="btn pulse-btn" id="emitPulse" type="button" hidden>Выпустить одну волну</button><button class="btn pulse-btn" id="emitAllPulses" type="button" hidden>Выпустить вместе</button><p class="mat-note" id="pulseHint" hidden>Каждое нажатие очищает старые волны и запускает короткий импульс. Для одновременного запуска переключите два источника в режим «Одна волна» и нажмите «Выпустить вместе». Анимация замедляется, чтобы можно было видеть отражения.</p></div>
+          <div class="control"><div class="control-row"><label for="frequency">Частота</label><span class="value" id="frequencyValue">340 Гц</span></div><div class="slider-line"><span class="slider-end">80</span><input id="frequency" type="range" min="80" max="1000" value="340" step="1" aria-label="Частота звука в герцах"><span class="slider-end" id="frequencyMaxLabel">1000</span></div><canvas class="frequency-preview" id="frequencyPreview" width="240" height="48" aria-label="Как меняется расстояние между волнами при изменении частоты" role="img"></canvas><div class="frequency-caption">Низкая частота — редкие волны, высокая — частые.</div><button class="btn sweep-btn" id="sweepBtn" type="button" hidden>Запустить перебор частот</button></div>
+          <div class="control"><div class="control-row"><label for="level">Сила сигнала</label><span class="value" id="levelValue">65%</span></div><div class="slider-line"><span class="slider-end">0</span><input id="level" type="range" min="0" max="100" value="65" step="1" aria-label="Сила сигнала в процентах"><span class="slider-end">100</span></div></div>
+        </section>
+        <section class="block context-panel" id="wallPanel" hidden>
+          <div class="block-head"><h2>Стены и слои</h2><span class="small-note" id="wallCount">0 стен</span></div>
+          <div class="control"><div class="control-row"><label for="material">Материал слоя</label></div><select class="select" id="material"><option value="concrete">Бетон</option><option value="brick">Кирпич</option><option value="plaster">Штукатурка</option><option value="drywall">Гипсокартон</option><option value="wood">Дерево</option><option value="metal">Металл · проводит вибрацию</option><option value="glass">Стекло</option><option value="reflector">Акустический отражатель · 99%</option><option value="curtain">Плотная ткань</option><option value="mineral">Минеральная вата</option><option value="foam">Акустический поролон</option><option value="bass">Басовая ловушка</option><option value="rubber">Резина</option><option value="composite">ГКЛ + минвата + ГКЛ</option><option value="insulated">Звукоизоляционная мембрана</option></select></div>
+          <div class="control"><div class="control-row"><label for="thickness">Толщина слоя</label><span class="value" id="thicknessValue">20 см</span></div><div class="slider-line"><span class="slider-end">5</span><input id="thickness" type="range" min="5" max="80" value="20" step="1" aria-label="Толщина слоя в сантиметрах"><span class="slider-end">80 см</span></div></div>
+          <div class="material-data" id="materialInfo">Свойства слоя будут показаны здесь.</div>
+          <button class="btn glass-tune" id="glassTune" type="button" hidden>Настроить источник под стекло</button>
+          <p class="mat-note" id="wallModeHint">Протяните стену на карте. Чтобы изменить готовую стену, нажмите «Выбрать» и щёлкните по ней.</p>
+          <button class="btn layer-preset" id="layerPreset" type="button">Показать пример: бетон — вата — бетон</button>
+        </section>
+        <section class="block context-panel" id="objectPanel" hidden>
+          <div class="block-head"><h2>Объекты</h2><span class="small-note">мебель и панели</span></div>
+          <div class="control"><div class="control-row"><label for="objectType">Тип объекта</label></div><select class="select" id="objectType"><option value="table">Стол · дерево</option><option value="cabinet">Шкаф · дерево</option><option value="sofa">Диван · мягкий</option><option value="absorber">Звукопоглощающая панель</option><option value="column">Колонна · бетон</option><option value="rubberPad">Резиновая прокладка</option></select></div>
+          <p class="mat-note" id="objectModeHint">Выберите тип и нажмите на карту. Готовый объект можно выбрать и заменить.</p>
+        </section>
+        <section class="block context-panel" id="equipmentPanel" hidden>
+          <div class="block-head"><h2>Специальное оборудование</h2><span class="small-note">13 устройств</span></div>
+          <select class="select" id="equipmentType" aria-label="Выберите акустическое оборудование">
+            <optgroup label="Измерительные приборы"><option value="microphone">Измерительный микрофон</option><option value="levelMeter">Шумомер</option><option value="analyzer">Анализатор частот</option><option value="oscilloscope">Осциллограф</option><option value="vibration">Датчик вибрации</option></optgroup>
+            <optgroup label="Источники звука"><option value="toneGenerator">Тональный генератор</option><option value="subwoofer">Сабвуфер</option></optgroup>
+            <optgroup label="Управление звуком"><option value="reflectorPlate">Отражающая панель</option><option value="diffuser">Акустический диффузор</option><option value="bassTrap">Басовая ловушка</option><option value="isolationScreen">Звукоизоляционный экран</option><option value="metalBeam">Металлическая балка</option><option value="hollowPipe">Полая металлическая труба</option></optgroup>
+          </select>
+          <button class="btn equipment-place" id="placeEquipment" type="button">Поставить на карте</button>
+          <p class="mat-note" id="equipmentModeHint">Выберите устройство и нажмите на карту. Прибор можно перетащить инструментом «Выбрать» или задать X и Y в метрах.</p>
+          <div class="equipment-readout" id="equipmentReadout" hidden><div class="equipment-readout-head"><span class="equipment-name" id="equipmentName"></span><strong class="equipment-value" id="equipmentValue"></strong></div><p class="equipment-description" id="equipmentDescription"></p><canvas class="equipment-chart" id="equipmentChart" width="224" height="66" hidden></canvas><div class="equipment-coordinates" id="equipmentCoordinates"><label>X, м<input id="equipmentX" type="number" min="0" step="0.1" aria-label="Положение прибора по горизонтали в метрах"></label><label>Y, м<input id="equipmentY" type="number" min="0" step="0.1" aria-label="Положение прибора по вертикали в метрах"></label></div></div>
+          <p class="mat-note">Поставьте балку или трубу рядом с источником и датчик вибрации рядом с металлом. Цветные линии показывают колебания стенок и воздуха внутри трубы. * Децибелы и вибрация в модели условные.</p>
+        </section>
+        <section class="block">
+          <div class="block-head"><h2>Волновое поле</h2><span class="small-note">модель в 2D</span></div>
+          <div class="readout"><div class="metric"><div class="metric-name">Длина волны</div><div class="metric-value" id="wavelengthValue">1,01 м</div></div><div class="metric"><div class="metric-name">Уровень источника</div><div class="metric-value" id="pressureValue">65%</div></div></div>
+          <div class="wave-legend"><span class="wave-neg"><i></i>разрежение</span><span class="wave-zero"><i></i>тишина</span><span class="wave-pos"><i></i>сжатие</span></div>
+          <div class="control"><div class="control-row"><label for="mapSize">Область карты</label><span class="value" id="mapLabel">18 × 12 м</span></div><select class="select" id="mapSize"><option value="18x12">18 × 12 м</option><option value="24x16">24 × 16 м</option><option value="36x24">36 × 24 м</option><option value="72x48">72 × 48 м</option><option value="144x96">144 × 96 м</option><option value="288x192">288 × 192 м</option><option value="576x384">576 × 384 м</option><option value="1152x768">1152 × 768 м</option><option value="2304x1536">2304 × 1536 м</option></select><button class="btn map-grow" id="mapGrow" type="button">Удвоить карту ×2</button><p class="mat-note">Кнопка «−» тоже расширяет область до 4608 × 3072 м. Звук постепенно затухает вдали; на очень большой карте мелкие детали волн упрощаются.</p></div>
+        </section>
+      </aside>
+      <section class="stage" aria-label="2D поле распространения звука">
+        <div class="stage-top"><div><div class="scene-title">Волны, отражения и затухание</div><div class="scene-caption">Оранжевый — сжатие, голубой — разрежение. Волны отражаются от объектов, но уходят за открытые края поля.</div></div><div class="stage-tools"><button class="icon-btn" id="viewBtn" type="button" title="Сбросить накопленное звуковое поле" aria-label="Очистить волновое поле"><svg viewBox="0 0 24 24" fill="none"><path d="M3 12h3l2-5 4 10 3-13 3 8h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+        <div class="canvas-wrap" id="canvasWrap"><canvas id="field" tabindex="0" aria-label="Симуляция звукового давления. Потяните пустое место для перемещения камеры или используйте стрелки." role="img"></canvas><div class="canvas-overlay"><span class="legend-dot"></span><span id="sourceOverlay">1 ИСТОЧНИК</span></div><div class="zoom-controls" role="group" aria-label="Масштаб симуляции"><button class="zoom-btn" id="zoomOut" type="button" aria-label="Отдалить" title="Отдалить">−</button><button class="zoom-value" id="zoomValue" type="button" aria-label="Сбросить масштаб" title="Сбросить масштаб">100%</button><button class="zoom-btn" id="zoomIn" type="button" aria-label="Приблизить" title="Приблизить">+</button></div><div class="camera-controls" role="group" aria-label="Перемещение камеры"><button class="camera-btn camera-up" id="cameraUp" type="button" aria-label="Камера вверх" title="Камера вверх">↑</button><button class="camera-btn camera-left" id="cameraLeft" type="button" aria-label="Камера влево" title="Камера влево">←</button><button class="camera-btn camera-center" id="cameraCenter" type="button" aria-label="Вернуть камеру в центр" title="Вернуть в центр">⌖</button><button class="camera-btn camera-right" id="cameraRight" type="button" aria-label="Камера вправо" title="Камера вправо">→</button><button class="camera-btn camera-down" id="cameraDown" type="button" aria-label="Камера вниз" title="Камера вниз">↓</button></div><div class="canvas-hint" id="canvasHint">Пустое место — двигать камеру · края не отражают звук</div><div class="scale">открытая область · 18 × 12 м</div></div>
+        <div class="stage-footer"><div class="stage-status"><div class="play-state"><span class="state-dot on" id="simDot"></span><span id="simState">Волновое поле обновляется</span></div><span id="soundState">Аудио выключено · включите для прослушивания источников</span></div><div class="map-wave-controls" role="group" aria-label="Режим звуковых волн"><select class="map-source-select" id="mapSourceSelect" aria-label="Выбрать источник"></select><div class="map-wave-switch"><button class="map-wave-mode" id="mapContinuous" type="button" aria-pressed="true">Много волн</button><button class="map-wave-mode" id="mapOneWave" type="button" aria-pressed="false">Одна волна</button></div><button class="map-pulse-btn" id="mapEmitPulse" type="button" hidden>▶ Выбранный</button><button class="map-pulse-btn secondary" id="mapEmitAllPulses" type="button" title="Выпустить волны одновременно из всех источников в режиме «Одна волна»" aria-label="Выпустить волны одновременно" hidden>▶ Вместе</button></div></div>
+      </section>
+    </section>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+  <script>
+(() => {
+  'use strict';
+
+  const VIEW_NX = 240, VIEW_NY = 160, PAD_X = 40, PAD_Y = 40;
+  const NX = VIEW_NX + PAD_X * 2, NY = VIEW_NY + PAD_Y * 2;
+  let ROOM_W = 18, ROOM_H = 12, DX = ROOM_W / (VIEW_NX - 1), DY = ROOM_H / (VIEW_NY - 1);
+  const BASE_DX = DX, BASE_DT = 0.000105, STEPS_PER_FRAME = 8, BASE_C = 343, MAX_ROOM_W = 4608, MAX_BASE_ROOM_W = 2304;
+  let DT = BASE_DT, BASE_ROOM_W = 18, BASE_ROOM_H = 12;
+  const canvas = document.getElementById('field');
+  const ctx = canvas.getContext('2d', { alpha: false });
+  const wrap = document.getElementById('canvasWrap');
+  const fieldCanvas = document.createElement('canvas');
+  fieldCanvas.width = VIEW_NX; fieldCanvas.height = VIEW_NY;
+  const fieldCtx = fieldCanvas.getContext('2d', { alpha: false });
+  const image = fieldCtx.createImageData(VIEW_NX, VIEW_NY);
+  const ui = {
+    freq: document.getElementById('frequency'), freqOut: document.getElementById('frequencyValue'), frequencyPreview: document.getElementById('frequencyPreview'),
+    freqMaxLabel: document.getElementById('frequencyMaxLabel'), sweepBtn: document.getElementById('sweepBtn'),
+    level: document.getElementById('level'), levelOut: document.getElementById('levelValue'),
+    type: document.getElementById('waveType'), emissionMode: document.getElementById('emissionMode'), pulseBtn: document.getElementById('emitPulse'), allPulsesBtn: document.getElementById('emitAllPulses'), pulseHint: document.getElementById('pulseHint'), material: document.getElementById('material'),
+    thickness: document.getElementById('thickness'), thicknessOut: document.getElementById('thicknessValue'),
+    materialInfo: document.getElementById('materialInfo'), glassTune: document.getElementById('glassTune'), wavelength: document.getElementById('wavelengthValue'),
+    pressure: document.getElementById('pressureValue'), toolHint: document.getElementById('toolHint'),
+    wallCount: document.getElementById('wallCount'), sourcesCount: document.getElementById('sourcesCount'), canvasHint: document.getElementById('canvasHint'),
+    mapSize: document.getElementById('mapSize'), mapLabel: document.getElementById('mapLabel'), mapGrow: document.getElementById('mapGrow'),
+    sourceList: document.getElementById('sourceList'), sourceLabel: document.getElementById('selectedSourceLabel'),
+    sourceOverlay: document.getElementById('sourceOverlay'), mapSourceSelect: document.getElementById('mapSourceSelect'), mapContinuous: document.getElementById('mapContinuous'), mapOneWave: document.getElementById('mapOneWave'), mapEmitPulse: document.getElementById('mapEmitPulse'), mapEmitAllPulses: document.getElementById('mapEmitAllPulses'), soundBtn: document.getElementById('soundBtn'),
+    soundBtnText: document.getElementById('soundBtnText'), soundState: document.getElementById('soundState'),
+    simState: document.getElementById('simState'), simDot: document.getElementById('simDot'),
+    pauseText: document.getElementById('pauseText'), toast: document.getElementById('toast'),
+    equipmentType: document.getElementById('equipmentType'), equipmentReadout: document.getElementById('equipmentReadout'),
+    equipmentName: document.getElementById('equipmentName'), equipmentValue: document.getElementById('equipmentValue'),
+    equipmentDescription: document.getElementById('equipmentDescription'), equipmentChart: document.getElementById('equipmentChart'),
+    equipmentX: document.getElementById('equipmentX'), equipmentY: document.getElementById('equipmentY')
+  };
+
+  // Relative values keep the room stable while making material and layer differences visible.
+  const materials = {
+    concrete: { name: 'Бетон', speed: .34, coupling: .09, damping: .009, reflection: 91, absorption: 11, loss: 24, color: '#a6b4b5' },
+    brick: { name: 'Кирпич', speed: .48, coupling: .17, damping: .006, reflection: 83, absorption: 16, loss: 17, color: '#db8d68' },
+    plaster: { name: 'Штукатурка', speed: .43, coupling: .22, damping: .012, reflection: 78, absorption: 24, loss: 13, color: '#d2c89f' },
+    drywall: { name: 'Гипсокартон', speed: .58, coupling: .34, damping: .014, reflection: 66, absorption: 31, loss: 10, color: '#b8a5e6' },
+    wood: { name: 'Дерево', speed: .61, coupling: .39, damping: .006, reflection: 61, absorption: 13, loss: 8, color: '#d2a45f' },
+    glass: { name: 'Стекло', speed: .66, coupling: .5, damping: .003, reflection: 50, absorption: 8, loss: 5, color: '#76c9d1' },
+    metal: { name: 'Металл', speed: .78, coupling: .3, damping: .002, reflection: 88, absorption: 4, loss: 11, color: '#8fd9e8' },
+    reflector: { name: 'Акустический отражатель', speed: .24, coupling: .008, damping: .001, reflection: 99, absorption: 2, loss: 42, color: '#d7f3fa' },
+    curtain: { name: 'Плотная ткань', speed: .92, coupling: .76, damping: .054, reflection: 24, absorption: 78, loss: 19, color: '#9d83b8' },
+    mineral: { name: 'Минеральная вата', speed: .85, coupling: .69, damping: .082, reflection: 31, absorption: 91, loss: 31, color: '#d4c871' },
+    foam: { name: 'Акустический поролон', speed: .79, coupling: .74, damping: .105, reflection: 26, absorption: 97, loss: 38, color: '#b5ff74' },
+    rubber: { name: 'Резина', speed: .45, coupling: .25, damping: .061, reflection: 75, absorption: 67, loss: 26, color: '#e07878' },
+    composite: { name: 'ГКЛ + минвата + ГКЛ', speed: .31, coupling: .055, damping: .058, reflection: 94, absorption: 87, loss: 48, color: '#7ed1a5' },
+    insulated: { name: 'Звукоизоляционная мембрана', speed: .23, coupling: .022, damping: .097, reflection: 98, absorption: 94, loss: 64, color: '#ffb760' },
+    bass: { name: 'Басовая ловушка', speed: .72, coupling: .65, damping: .16, reflection: 19, absorption: 96, loss: 39, color: '#bc9bea' }
+  };
+  const vibrationProps = {
+    metal: { stiffness: .31, damping: .012, drive: .018, radiate: .025, contact: .16, color: '#ffe08a' },
+    wood: { stiffness: .23, damping: .04, drive: .012, radiate: .009, contact: .11, color: '#ffd38e' },
+    concrete: { stiffness: .27, damping: .025, drive: .009, radiate: .009, contact: .10, color: '#dcebe9' },
+    brick: { stiffness: .22, damping: .035, drive: .010, radiate: .008, contact: .09, color: '#ffc295' },
+    plaster: { stiffness: .20, damping: .055, drive: .011, radiate: .006, contact: .08, color: '#f5deb2' },
+    drywall: { stiffness: .18, damping: .060, drive: .013, radiate: .008, contact: .10, color: '#d7c2ff' },
+    glass: { stiffness: .26, damping: .030, drive: .014, radiate: .012, contact: .10, color: '#a7f6ff' },
+    rubber: { stiffness: .12, damping: .12, drive: .025, radiate: .002, contact: .18, color: '#ff9aa2' },
+    foam: { stiffness: .08, damping: .22, drive: .008, radiate: .001, contact: .05, color: '#c8ff9d' },
+    curtain: { stiffness: .07, damping: .24, drive: .010, radiate: .001, contact: .04, color: '#dbbfff' },
+    mineral: { stiffness: .08, damping: .24, drive: .008, radiate: .001, contact: .04, color: '#fff1a0' },
+    composite: { stiffness: .16, damping: .13, drive: .007, radiate: .004, contact: .07, color: '#aaf5c7' },
+    insulated: { stiffness: .11, damping: .19, drive: .006, radiate: .002, contact: .06, color: '#ffd6a0' },
+    reflector: { stiffness: .30, damping: .016, drive: .012, radiate: .014, contact: .13, color: '#d8f8ff' },
+    bass: { stiffness: .08, damping: .24, drive: .008, radiate: .001, contact: .04, color: '#dec5ff' }
+  };
+  const sourceColors = ['#b5ff74', '#65d9ff', '#ffb760', '#d29bff', '#ff7d94', '#60ead0', '#e6e873', '#ff9bd2'];
+  const objectSpecs = {
+    table: { name: 'Стол', material: 'wood', w: 1.5, h: .8, symbol: 'СТОЛ' },
+    cabinet: { name: 'Шкаф', material: 'wood', w: .85, h: .7, symbol: 'ШКАФ' },
+    sofa: { name: 'Диван', material: 'foam', w: 2, h: .85, symbol: 'ДИВАН' },
+    absorber: { name: 'Акустическая панель', material: 'foam', w: 1.4, h: .35, symbol: 'ПОГЛОТИТЕЛЬ' },
+    column: { name: 'Колонна', material: 'concrete', w: .55, h: .55, symbol: 'КОЛОННА' },
+    rubberPad: { name: 'Резиновая прокладка', material: 'rubber', w: .9, h: .35, symbol: 'РЕЗИНА', description: 'Колеблется при контакте с металлом и другими предметами, но быстро гасит вибрацию.' },
+    microphone: { name: 'Измерительный микрофон', kind: 'sensor', w: .25, h: .25, symbol: 'МИК', color: '#77e9e5', description: 'Показывает относительную силу волны в своей точке.' },
+    levelMeter: { name: 'Шумомер', kind: 'sensor', w: .3, h: .3, symbol: 'ДБ', color: '#ffe089', description: 'Уровень в условных децибелах модели.' },
+    analyzer: { name: 'Анализатор частот', kind: 'sensor', w: .45, h: .35, symbol: 'СПЕКТР', color: '#89beff', description: 'Измеряет частоты пришедшей волны в пяти полосах прямо в этой точке.' },
+    oscilloscope: { name: 'Осциллограф', kind: 'sensor', w: .45, h: .35, symbol: 'ОСЦ', color: '#b5ff74', description: 'Показывает форму волны, измеренную в выбранной точке.' },
+    vibration: { name: 'Датчик вибрации', kind: 'sensor', w: .32, h: .32, symbol: 'ВИБР', color: '#ff9eb0', description: 'Поставьте рядом с металлом, деревом, стеклом, резиной или другим предметом: датчик покажет его колебания.' },
+    toneGenerator: { name: 'Тональный генератор', kind: 'source', frequency: 500, w: .45, h: .45, symbol: 'ГЕН', description: 'Точный тон с автоматической развёрткой частоты.' },
+    subwoofer: { name: 'Сабвуфер', kind: 'source', frequency: 90, w: .7, h: .55, symbol: 'САБ', description: 'Усиленный источник низких частот 80–220 Гц.' },
+    reflectorPlate: { name: 'Отражающая панель', material: 'reflector', w: 1.5, h: .2, symbol: 'ОТРАЖ.', description: 'Сильно отражает волны.' },
+    diffuser: { name: 'Акустический диффузор', material: 'wood', w: 1.6, h: .5, symbol: 'ДИФФ.', description: 'Рассеивает волну неровной поверхностью.' },
+    bassTrap: { name: 'Басовая ловушка', material: 'bass', w: .8, h: .8, symbol: 'БАС', description: 'Сильно гасит волны в занятой области.' },
+    isolationScreen: { name: 'Звукоизоляционный экран', material: 'insulated', w: 1.6, h: .25, symbol: 'ЭКРАН', description: 'Снижает прохождение звука за экран.' },
+    metalBeam: { name: 'Металлическая балка', material: 'metal', w: 3, h: .22, symbol: 'БАЛКА', description: 'Звук возбуждает колебания металла. Вибрация бежит вдоль балки и вновь излучает звук.' },
+    hollowPipe: { name: 'Полая металлическая труба', material: 'metal', w: 3, h: .55, symbol: 'ТРУБА', description: 'Стенки трубы вибрируют, а внутри по воздушному каналу идёт отдельная волна, которая выходит из открытых концов.' }
+  };
+  const equipmentTypes = new Set(['microphone', 'levelMeter', 'analyzer', 'oscilloscope', 'vibration', 'toneGenerator', 'subwoofer', 'reflectorPlate', 'diffuser', 'bassTrap', 'isolationScreen', 'metalBeam', 'hollowPipe']);
+  const state = {
+    sources: [{ id: 1, x: .27, y: .52, frequency: 340, level: 65, type: 'sine', emissionMode: 'continuous', color: sourceColors[0], audio: null }],
+    selected: 1, nextId: 2, walls: [], objects: [], nextObjectId: 1, selectedObject: null, selectedWall: null, tool: 'source', drag: null, preview: null,
+    running: true, audioOn: false, audio: null, width: 0, height: 0, dpr: 1, simTime: 0, zoom: 1, cameraScale: 1, cameraX: 0, cameraY: 0,
+    pressure: new Float32Array(NX * NY), next: new Float32Array(NX * NY),
+    pressureX: new Float32Array(NX * NY), pressureY: new Float32Array(NX * NY),
+    velocityX: new Float32Array(NX * NY), velocityY: new Float32Array(NX * NY),
+    medium: new Uint8Array(NX * NY), coeff: new Float32Array(NX * NY),
+    audibleMask: new Float32Array(NX * NY), audibleDirty: true,
+    damping: new Float32Array(NX * NY), faceX: new Float32Array(NX * NY), faceY: new Float32Array(NX * NY),
+    pmlCellAX: new Float32Array(NX), pmlCellBX: new Float32Array(NX), pmlFaceAX: new Float32Array(NX), pmlFaceBX: new Float32Array(NX),
+    pmlCellAY: new Float32Array(NY), pmlCellBY: new Float32Array(NY), pmlFaceAY: new Float32Array(NY), pmlFaceBY: new Float32Array(NY), vibrationContacts: []
+  };
+
+  let toastTimer = 0, lastFrame = performance.now();
+  const selected = () => state.sources.find(s => s.id === state.selected) || state.sources[0];
+  const db = value => String(value).replace('.', ',');
+  function say(text) {
+    ui.toast.textContent = text; ui.toast.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => ui.toast.classList.remove('show'), 1900);
+  }
+  function formatWalls(n) { return `${n} ${n === 1 ? 'слой' : n > 1 && n < 5 ? 'слоя' : 'слоёв'}`; }
+  function sourceRange(src) { return src.level <= 0 ? 0 : (70 + 260 * src.level / 100) * (src.device === 'subwoofer' ? 1.25 : 1); }
+  function sourceFade(distance, range) { return range > 0 ? Math.pow(clamp((range - distance) / (range * .28), 0, 1), 2) : 0; }
+  function glassResonance(thicknessCm) { return Math.round(500 + (thicknessCm - 20) * 3); }
+  function prepareWall(wall) {
+    if (wall.material === 'glass') {
+      wall.resonance = glassResonance(Math.min(wall.w, wall.h) * 100);
+      wall.damage = 0;
+      wall.broken = false;
+      wall.contactPeak = 0;
+    }
+    if (vibrationProps[wall.material]) prepareVibration(wall);
+    return wall;
+  }
+  function prepareVibration(shape) {
+    if (!shape.vibration) shape.vibration = { current: new Float32Array(40), previous: new Float32Array(40), next: new Float32Array(40) };
+    if (!shape.contactDrive) shape.contactDrive = new Float32Array(40);
+    if (shape.type === 'hollowPipe' && !shape.cavity) shape.cavity = { current: new Float32Array(40), previous: new Float32Array(40), next: new Float32Array(40) };
+  }
+  function updateMaterialInfo() {
+    const m = materials[ui.material.value];
+    const thick = Number(ui.thickness?.value || 20), cells = thick / 100 / Math.min(DX, DY);
+    const glassNote = ui.material.value === 'glass' ? `<br>Резонанс около <b>${glassResonance(thick)} Гц</b>: при силе от 70% стекло постепенно трескается от звука в воздухе или вибрации через соприкасающиеся предметы.` : '';
+    const vibrationNote = ui.material.value === 'rubber' ? '<br>Резина может колебаться при контакте с металлом, но быстро гасит вибрацию.' : vibrationProps[ui.material.value] ? '<br>Материал колеблется от звука и передаёт вибрацию соприкасающимся предметам.' : '';
+    ui.materialInfo.innerHTML = `<b>${m.name}</b> · отражение ~${m.reflection}% · поглощение ~${m.absorption}%<br>Слой ${thick} см проходит через ~${db(cells.toFixed(1))} расчётных ячейки.${glassNote}${vibrationNote}<br>Параметры сравнительные, модель упрощена.`;
+    ui.glassTune.hidden = ui.material.value !== 'glass';
+  }
+  function frequencyPitch(frequency) { return clamp(Math.log(frequency / 80) / Math.log(1000 / 80), 0, 1); }
+  function drawFrequencyPreview() {
+    const preview = ui.frequencyPreview, c = preview.getContext('2d');
+    const w = preview.width, h = preview.height, pitch = frequencyPitch(selected().frequency), cycles = 2 + 12 * pitch;
+    c.clearRect(0, 0, w, h);
+    c.strokeStyle = '#33525a'; c.lineWidth = 1; c.beginPath(); c.moveTo(0, h / 2); c.lineTo(w, h / 2); c.stroke();
+    c.strokeStyle = '#b5ff74'; c.lineWidth = 2; c.beginPath();
+    for (let x = 0; x <= w; x++) {
+      const y = h / 2 - Math.sin(x / w * Math.PI * 2 * cycles) * h * .29;
+      if (x === 0) c.moveTo(x, y); else c.lineTo(x, y);
+    }
+    c.stroke();
+  }
+  function renderMapWaveControls(current) {
+    ui.mapSourceSelect.replaceChildren(...state.sources.map(src => new Option(`${String(src.id).padStart(2, '0')} · ${src.device ? objectSpecs[src.device].name : 'Источник'}`, String(src.id))));
+    ui.mapSourceSelect.value = String(current.id);
+    const pulse = current.emissionMode === 'pulse';
+    ui.mapContinuous.setAttribute('aria-pressed', String(!pulse));
+    ui.mapOneWave.setAttribute('aria-pressed', String(pulse));
+    ui.mapEmitPulse.hidden = !pulse;
+    const pulseCount = state.sources.filter(src => src.emissionMode === 'pulse').length;
+    ui.mapEmitAllPulses.hidden = pulseCount < 2;
+    ui.allPulsesBtn.hidden = !pulse || pulseCount < 2;
+  }
+  function renderSources() {
+    const current = selected();
+    ui.sourceList.replaceChildren();
+    for (const src of state.sources) {
+      const row = document.createElement('div'); row.className = 'source-row'; row.dataset.sourceId = String(src.id); row.setAttribute('aria-pressed', String(src.id === state.selected));
+      const name = src.device ? objectSpecs[src.device].name : 'Источник';
+      row.innerHTML = `<button class="source-pick" type="button" aria-pressed="${src.id === state.selected}"><span class="source-dot" style="color:${src.color};background:${src.color}"></span><span class="source-name">${name} ${String(src.id).padStart(2, '0')}</span><span class="source-meta">${src.emissionMode === 'pulse' ? '1 волна · ' : ''}${src.frequency} Гц · ${src.level}%</span></button><button class="source-remove" type="button" aria-label="Удалить источник ${src.id}">×</button>`;
+      row.querySelector('.source-pick').addEventListener('click', () => selectSource(src.id));
+      row.querySelector('.source-remove').addEventListener('click', e => { e.stopPropagation(); removeSource(src.id); });
+      ui.sourceList.append(row);
+    }
+    ui.sourceLabel.textContent = `${current.device ? objectSpecs[current.device].name.toLowerCase() : 'источник'} ${String(current.id).padStart(2, '0')}`;
+    ui.freq.max = current.device === 'subwoofer' ? 220 : 1000;
+    ui.freqMaxLabel.textContent = ui.freq.max;
+    ui.freq.value = current.frequency; ui.level.value = current.level; ui.type.value = current.type; ui.emissionMode.value = current.emissionMode || 'continuous';
+    ui.pulseBtn.hidden = current.emissionMode !== 'pulse'; ui.pulseHint.hidden = current.emissionMode !== 'pulse';
+    ui.sweepBtn.hidden = current.device !== 'toneGenerator' || current.type === 'noise' || current.emissionMode === 'pulse';
+    ui.sweepBtn.textContent = current.sweep ? 'Остановить на текущей частоте' : 'Запустить перебор частот';
+    ui.sourceOverlay.textContent = `${state.sources.length} ${state.sources.length === 1 ? 'ИСТОЧНИК' : state.sources.length < 5 ? 'ИСТОЧНИКА' : 'ИСТОЧНИКОВ'}`;
+    ui.sourcesCount.textContent = `${state.sources.length} ${state.sources.length === 1 ? 'источник' : state.sources.length < 5 ? 'источника' : 'источников'}`;
+    renderMapWaveControls(current);
+    updateReadouts();
+  }
+  function selectSource(id) {
+    state.selected = id; setTool('pan'); showPanel('signal'); renderSources();
+    if (state.audioOn) syncAudio();
+  }
+  function updateReadouts() {
+    const s = selected();
+    ui.freqOut.textContent = `${s.frequency} Гц`; ui.levelOut.textContent = `${s.level}%`;
+    ui.sweepBtn.textContent = s.sweep ? 'Остановить на текущей частоте' : 'Запустить перебор частот';
+    ui.pressure.textContent = `${s.level}%`;
+    ui.wavelength.textContent = `${db((BASE_C / s.frequency).toFixed(2))} м`;
+    ui.thicknessOut.textContent = `${ui.thickness.value} см`;
+    const brokenGlass = state.walls.filter(wall => wall.broken).length;
+    ui.wallCount.textContent = `${formatWalls(state.walls.length - brokenGlass)} · ${state.objects.length} предм.${brokenGlass ? ` · ${brokenGlass} разбито` : ''}`;
+    updateMaterialInfo();
+    drawFrequencyPreview();
+    for (const row of ui.sourceList.children) {
+      const src = state.sources.find(x => String(x.id) === row.dataset.sourceId);
+      if (src) row.querySelector('.source-meta').textContent = `${src.emissionMode === 'pulse' ? '1 волна · ' : ''}${src.frequency} Гц · ${src.level}%`;
+      row.setAttribute('aria-pressed', String(src?.id === state.selected));
+    }
+    if (state.audioOn) syncAudio();
+  }
+  function showPanel(name) {
+    for (const panel of ['signal', 'wall', 'object', 'equipment']) document.getElementById(`${panel}Panel`).hidden = panel !== name;
+  }
+  function setTool(tool) {
+    state.tool = tool;
+    state.selectedWall = null; state.selectedObject = null;
+    document.querySelectorAll('[data-tool]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.tool === tool)));
+    showPanel({ source: 'signal', wall: 'wall', object: 'object', equipment: 'equipment' }[tool] || null);
+    const hints = {
+      source: 'Щёлкните по полю, чтобы добавить ещё один источник звука.',
+      wall: 'Протяните стену поперёк комнаты. Толщину задаёт ползунок ниже.',
+      object: 'Выберите объект. Щелчок ставит его на карту, перетаскивание задаёт размер.',
+      equipment: 'Выберите прибор. Щёлкните по карте, чтобы поставить его.',
+      erase: 'Нажмите на стену или предмет, чтобы удалить его.',
+      pan: 'Тяните пустое место, чтобы двигать камеру. Нажмите на источник, стену или предмет, чтобы открыть настройки.'
+    };
+    ui.toolHint.textContent = hints[tool]; ui.canvasHint.textContent = hints[tool];
+    document.getElementById('wallModeHint').textContent = 'Протяните стену на карте. Чтобы изменить готовую стену, нажмите «Выбрать» и щёлкните по ней.';
+    document.getElementById('objectModeHint').textContent = 'Выберите тип и нажмите на карту. Готовый объект можно выбрать и заменить.';
+    document.getElementById('equipmentModeHint').textContent = 'Выберите устройство и нажмите на карту. Прибор можно перетащить инструментом «Выбрать» или задать X и Y в метрах.';
+    updateEquipmentPanel();
+  }
+  document.querySelectorAll('[data-tool]').forEach(b => b.addEventListener('click', () => setTool(b.dataset.tool)));
+  ui.material.addEventListener('change', () => {
+    if (state.tool === 'pan' && state.selectedWall) {
+      const wall = state.selectedWall; wall.material = ui.material.value;
+      if (wall.material === 'glass' || vibrationProps[wall.material]) prepareWall(wall);
+      if (wall.material !== 'glass') { delete wall.resonance; delete wall.damage; delete wall.broken; delete wall.contactPeak; }
+      if (!vibrationProps[wall.material]) { delete wall.vibration; delete wall.contactDrive; }
+      rebuildMedium(); say(`Материал стены: ${materials[wall.material].name}`);
+    }
+    updateReadouts();
+  });
+  ui.thickness.addEventListener('input', () => {
+    if (state.tool === 'pan' && state.selectedWall) {
+      const wall = state.selectedWall, thick = +ui.thickness.value / 100;
+      if (wall.w >= wall.h) { const center = wall.y + wall.h / 2; wall.h = thick; wall.y = clamp(center - thick / 2, 0, ROOM_H - thick); }
+      else { const center = wall.x + wall.w / 2; wall.w = thick; wall.x = clamp(center - thick / 2, 0, ROOM_W - thick); }
+      if (wall.material === 'glass') prepareWall(wall);
+      rebuildMedium();
+    }
+    updateReadouts();
+  });
+  ui.glassTune.addEventListener('click', () => {
+    const src = selected(); src.frequency = state.selectedWall?.resonance || glassResonance(+ui.thickness.value); src.level = Math.max(src.level, 85);
+    ui.freq.value = src.frequency; ui.level.value = src.level; clearField(); updateReadouts();
+    say(`Источник настроен на ${src.frequency} Гц и ${src.level}%`);
+  });
+  document.getElementById('objectType').addEventListener('change', e => {
+    if (state.tool === 'pan' && state.selectedObject && !equipmentTypes.has(state.objects.find(o => o.id === state.selectedObject)?.type)) replaceSelectedObject(e.target.value);
+    else setTool('object');
+  });
+  ui.equipmentType.addEventListener('change', e => {
+    if (state.tool === 'pan' && state.selectedObject && equipmentTypes.has(state.objects.find(o => o.id === state.selectedObject)?.type)) replaceSelectedObject(e.target.value);
+    else setTool('equipment');
+  });
+  document.getElementById('placeEquipment').addEventListener('click', () => { setTool('equipment'); say('Щёлкните по карте, чтобы поставить оборудование'); });
+  function moveSelectedEquipment() {
+    const o = state.objects.find(item => item.id === state.selectedObject); if (!o) return;
+    if (ui.equipmentX.value === '' || ui.equipmentY.value === '') return;
+    const x = Number(ui.equipmentX.value), y = Number(ui.equipmentY.value);
+    if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+    o.x = clamp(x - o.w / 2, 0, ROOM_W - o.w); o.y = clamp(y - o.h / 2, 0, ROOM_H - o.h);
+    if (o.material) rebuildMedium();
+    if (objectSpecs[o.type]?.kind === 'sensor') o.modelStrength = modeledStrengthAt(o);
+    updateEquipmentPanel();
+  }
+  ui.equipmentX.addEventListener('change', moveSelectedEquipment);
+  ui.equipmentY.addEventListener('change', moveSelectedEquipment);
+  ui.mapSize.addEventListener('change', () => { const [w, h] = ui.mapSize.value.split('x').map(Number); setMapSize(w, h); say(`Размер области: ${ui.mapLabel.textContent}`); });
+  ui.mapGrow.addEventListener('click', () => {
+    const w = BASE_ROOM_W * 2, h = BASE_ROOM_H * 2;
+    if (w > MAX_BASE_ROOM_W) { say('Достигнут максимальный размер карты'); return; }
+    const value = `${w}x${h}`;
+    if (![...ui.mapSize.options].some(option => option.value === value)) ui.mapSize.add(new Option(`${w} × ${h} м`, value));
+    ui.mapSize.value = value; setMapSize(w, h); say(`Размер области: ${ui.mapLabel.textContent}`);
+  });
+  document.getElementById('zoomOut').addEventListener('click', () => adjustZoom(1 / 1.2));
+  document.getElementById('zoomIn').addEventListener('click', () => adjustZoom(1.2));
+  document.getElementById('zoomValue').addEventListener('click', () => setZoom(1));
+  document.getElementById('cameraLeft').addEventListener('click', () => panCamera(state.width * .12, 0));
+  document.getElementById('cameraRight').addEventListener('click', () => panCamera(-state.width * .12, 0));
+  document.getElementById('cameraUp').addEventListener('click', () => panCamera(0, state.height * .12));
+  document.getElementById('cameraDown').addEventListener('click', () => panCamera(0, -state.height * .12));
+  document.getElementById('cameraCenter').addEventListener('click', () => { state.cameraScale = 1; state.cameraX = 0; state.cameraY = 0; document.getElementById('zoomValue').textContent = zoomLabel(); });
+
+  function resize() {
+    const r = wrap.getBoundingClientRect(); if (!r.width || !r.height) return;
+    state.dpr = Math.min(devicePixelRatio || 1, 2); state.width = r.width; state.height = r.height;
+    canvas.width = Math.round(r.width * state.dpr); canvas.height = Math.round(r.height * state.dpr);
+    ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0); clampCamera(); rebuildMedium();
+  }
+  new ResizeObserver(resize).observe(wrap);
+  function canvasPoint(e) { const r = canvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function viewZoom() { return Math.max(1, state.zoom) * state.cameraScale; }
+  function zoomLabel() { const value = state.zoom * state.cameraScale; return value < .01 ? '<1%' : `${Math.round(value * 100)}%`; }
+  function clampCamera() {
+    const z = viewZoom();
+    state.cameraX = clamp(state.cameraX, -state.width * (z - 1) / 2, state.width * (z - 1) / 2);
+    state.cameraY = clamp(state.cameraY, -state.height * (z - 1) / 2, state.height * (z - 1) / 2);
+  }
+  function panCamera(dx, dy) {
+    if (viewZoom() <= 1.001) state.cameraScale = 1.5;
+    state.cameraX += dx; state.cameraY += dy; clampCamera();
+    document.getElementById('zoomValue').textContent = zoomLabel();
+  }
+  function toRoom(p) { const z = viewZoom(); return { x: clamp(.5 + ((p.x - state.cameraX) / state.width - .5) / z, 0, 1) * ROOM_W, y: clamp(.5 + ((p.y - state.cameraY) / state.height - .5) / z, 0, 1) * ROOM_H }; }
+  function toCanvas(x, y) { const z = viewZoom(); return { x: state.width * (.5 + (x / ROOM_W - .5) * z) + state.cameraX, y: state.height * (.5 + (y / ROOM_H - .5) * z) + state.cameraY }; }
+  function setZoom(value) {
+    state.zoom = clamp(value, BASE_ROOM_W / MAX_ROOM_W, 3); state.cameraScale = 1;
+    const sizeFactor = 1 / Math.min(1, state.zoom);
+    setDomainSize(BASE_ROOM_W * sizeFactor, BASE_ROOM_H * sizeFactor);
+    clampCamera();
+    document.getElementById('zoomValue').textContent = zoomLabel();
+  }
+  function adjustZoom(factor) {
+    if (state.cameraScale > 1.001) {
+      state.cameraScale = clamp(state.cameraScale * factor, 1, 3);
+      clampCamera();
+      document.getElementById('zoomValue').textContent = zoomLabel();
+    } else setZoom(state.zoom * factor);
+  }
+  function setDomainSize(width, height, recenter = true) {
+    if (Math.abs(width - ROOM_W) < .0001 && Math.abs(height - ROOM_H) < .0001) return;
+    const oldW = ROOM_W, oldH = ROOM_H, shiftX = recenter ? (width - oldW) / 2 : 0, shiftY = recenter ? (height - oldH) / 2 : 0;
+    for (const src of state.sources) { src.x = (src.x * oldW + shiftX) / width; src.y = (src.y * oldH + shiftY) / height; }
+    for (const shape of [...state.walls, ...state.objects]) {
+      shape.x += shiftX; shape.y += shiftY;
+    }
+    ROOM_W = width; ROOM_H = height; DX = ROOM_W / (VIEW_NX - 1); DY = ROOM_H / (VIEW_NY - 1); DT = BASE_DT * DX / BASE_DX;
+    state.cameraX = 0; state.cameraY = 0;
+    state.audibleDirty = true;
+    const label = `${db(Number(ROOM_W.toFixed(1)))} × ${db(Number(ROOM_H.toFixed(1)))} м`;
+    ui.mapLabel.textContent = label;
+    document.querySelector('.scale').textContent = `открытая область · ${label}`;
+    clearField(); rebuildMedium(); updateReadouts();
+  }
+  function setMapSize(width, height, recenter = true) {
+    BASE_ROOM_W = width; BASE_ROOM_H = height; state.cameraScale = 1;
+    state.zoom = Math.max(state.zoom, BASE_ROOM_W / MAX_ROOM_W);
+    setDomainSize(BASE_ROOM_W / Math.min(1, state.zoom), BASE_ROOM_H / Math.min(1, state.zoom), recenter);
+    document.getElementById('zoomValue').textContent = zoomLabel();
+  }
+  function sourceAt(x, y) {
+    let hit = null, best = 15;
+    for (const s of state.sources) { const p = toCanvas(s.x * ROOM_W, s.y * ROOM_H), d = Math.hypot(x - p.x, y - p.y); if (d < best) { best = d; hit = s; } }
+    return hit;
+  }
+  function addSource(x, y) {
+    if (state.sources.length >= 8) { say('Можно добавить не больше восьми источников'); return; }
+    const old = selected(), id = state.nextId++;
+    const src = { id, x: clamp(x / ROOM_W, 0, 1), y: clamp(y / ROOM_H, 0, 1), frequency: old.frequency, level: old.level, type: old.type, emissionMode: old.emissionMode || 'continuous', pulseStartTime: null, color: sourceColors[(id - 1) % sourceColors.length], audio: null };
+    state.sources.push(src);
+    state.audibleDirty = true;
+    state.selected = id; renderSources(); say(`Добавлен источник ${String(id).padStart(2, '0')}`);
+    return src;
+  }
+  function removeSource(id) {
+    if (state.sources.length === 1) { say('В сцене должен остаться хотя бы один источник'); return; }
+    const src = state.sources.find(s => s.id === id); stopSourceAudio(src);
+    state.sources = state.sources.filter(s => s.id !== id);
+    state.audibleDirty = true;
+    if (state.selected === id) state.selected = state.sources[0].id;
+    renderSources();
+  }
+  function findWall(x, y) { const p = toCanvas(x, y); return state.walls.findIndex(o => { const a = toCanvas(o.x, o.y), b = toCanvas(o.x + o.w, o.y + o.h); return p.x >= a.x - 6 && p.x <= b.x + 6 && p.y >= a.y - 6 && p.y <= b.y + 6; }); }
+  function selectWall(wall) {
+    state.selectedWall = wall; state.selectedObject = null;
+    ui.material.value = wall.material;
+    ui.thickness.value = clamp(Math.round(Math.min(wall.w, wall.h) * 100), 5, 80);
+    showPanel('wall'); updateReadouts(); updateEquipmentPanel();
+    document.getElementById('wallModeHint').textContent = 'Выбрана стена: материал и толщину можно изменить прямо здесь. Повторно выберите «Стена», чтобы рисовать новую.';
+  }
+  function findObject(x, y) { return state.objects.findIndex(o => {
+    if (objectSpecs[o.type]?.kind === 'sensor') {
+      const point = toCanvas(x, y), center = toCanvas(o.x + o.w / 2, o.y + o.h / 2);
+      return Math.hypot(point.x - center.x, point.y - center.y) < 18;
+    }
+    return x >= o.x && x <= o.x + o.w && y >= o.y && y <= o.y + o.h;
+  }); }
+  function addObjectAt(x, y, w, h, type) {
+    const spec = objectSpecs[type];
+    if (!spec) throw new Error('Неизвестный тип предмета');
+    if (spec.kind === 'source') {
+      const src = addSource(x + w / 2, y + h / 2);
+      if (!src) return null;
+      src.device = type; src.frequency = spec.frequency; src.level = 70; src.type = 'sine'; src.emissionMode = 'continuous';
+      state.selectedObject = null; clearField(); renderSources(); setTool('pan'); showPanel('signal');
+      return src;
+    }
+    w = clamp(w, .2, ROOM_W); h = clamp(h, .2, ROOM_H);
+    const object = { id: state.nextObjectId++, type, name: spec.name, symbol: spec.symbol, material: spec.material || null,
+      x: clamp(x, 0, ROOM_W - w), y: clamp(y, 0, ROOM_H - h), w, h };
+    if (vibrationProps[object.material]) prepareVibration(object);
+    state.objects.push(object); if (spec.kind === 'sensor') object.modelStrength = modeledStrengthAt(object);
+    state.selectedObject = object.id; rebuildMedium(); updateReadouts(); updateEquipmentPanel(); return object;
+  }
+  function replaceSelectedObject(type) {
+    const o = state.objects.find(item => item.id === state.selectedObject), spec = objectSpecs[type];
+    if (!o || !spec) return;
+    const cx = o.x + o.w / 2, cy = o.y + o.h / 2;
+    if (spec.kind === 'source') {
+      const src = addObjectAt(cx - spec.w / 2, cy - spec.h / 2, spec.w, spec.h, type);
+      if (!src) return;
+      state.objects = state.objects.filter(item => item.id !== o.id);
+      rebuildMedium(); updateReadouts(); setTool('pan'); showPanel('signal');
+    } else {
+      o.type = type; o.name = spec.name; o.symbol = spec.symbol; o.material = spec.material || null;
+      o.w = spec.w; o.h = spec.h; o.x = clamp(cx - o.w / 2, 0, ROOM_W - o.w); o.y = clamp(cy - o.h / 2, 0, ROOM_H - o.h);
+      o.energy = 0; o.trace = null; o.tracePos = 0; o.traceCount = 0; o.spectrum = null;
+      delete o.vibration; delete o.cavity; delete o.contactDrive;
+      if (vibrationProps[o.material]) prepareVibration(o);
+      rebuildMedium(); updateReadouts(); updateEquipmentPanel();
+    }
+    say(`Теперь это ${spec.name.toLowerCase()}`);
+  }
+  function addWall(x, y, length, orientation, material, thicknessCm) {
+    const thick = thicknessCm / 100;
+    let wall;
+    if (orientation === 'horizontal') wall = { x: clamp(x, 0, ROOM_W - length), y: clamp(y - thick / 2, 0, ROOM_H - thick), w: length, h: thick, material };
+    else wall = { x: clamp(x - thick / 2, 0, ROOM_W - thick), y: clamp(y, 0, ROOM_H - length), w: thick, h: length, material };
+    state.walls.push(prepareWall(wall)); rebuildMedium(); updateReadouts();
+    return wall;
+  }
+  canvas.addEventListener('contextmenu', e => e.preventDefault());
+  canvas.addEventListener('keydown', e => {
+    const moves = { ArrowLeft: [state.width * .12, 0], ArrowRight: [-state.width * .12, 0], ArrowUp: [0, state.height * .12], ArrowDown: [0, -state.height * .12] };
+    if (moves[e.key]) { e.preventDefault(); panCamera(...moves[e.key]); }
+  });
+  canvas.addEventListener('wheel', e => { e.preventDefault(); adjustZoom(e.deltaY < 0 ? 1.12 : 1 / 1.12); }, { passive: false });
+  canvas.addEventListener('pointerdown', e => {
+    e.preventDefault(); canvas.focus({ preventScroll: true }); canvas.setPointerCapture(e.pointerId);
+    const p = canvasPoint(e), room = toRoom(p);
+    if (state.tool === 'wall') { state.drag = { kind: 'wall', x: room.x, y: room.y, px: p.x, py: p.y, moved: false }; state.preview = { x: p.x, y: p.y, w: 0, h: 0 }; }
+    else if (state.tool === 'object' || state.tool === 'equipment') { const type = state.tool === 'equipment' ? ui.equipmentType.value : document.getElementById('objectType').value; state.drag = { kind: 'object', x: room.x, y: room.y, px: p.x, py: p.y, type, moved: false }; state.preview = { x: p.x, y: p.y, w: 0, h: 0 }; }
+    else if (state.tool === 'erase') { const oi = findObject(room.x, room.y); if (oi >= 0) { const removed = state.objects.splice(oi, 1)[0]; if (state.selectedObject === removed.id) state.selectedObject = null; } else { const idx = findWall(room.x, room.y); if (idx >= 0) { const removed = state.walls.splice(idx, 1)[0]; if (state.selectedWall === removed) state.selectedWall = null; } } rebuildMedium(); updateReadouts(); updateEquipmentPanel(); }
+    else if (state.tool === 'source') addSource(room.x, room.y);
+    else if (state.tool === 'pan') {
+      const oi = findObject(room.x, room.y);
+      if (oi >= 0) {
+        const o = state.objects[oi], equipment = equipmentTypes.has(o.type);
+        state.selectedWall = null; state.selectedObject = o.id; state.drag = { kind: 'objectMove', id: o.id, dx: room.x - o.x, dy: room.y - o.y };
+        if (equipment) { ui.equipmentType.value = o.type; document.getElementById('equipmentModeHint').textContent = 'Выбран прибор: выбор другого типа заменит его. Перетащите прибор, чтобы переместить.'; }
+        else { document.getElementById('objectType').value = o.type; document.getElementById('objectModeHint').textContent = 'Выбран объект: выбор другого типа заменит его. Перетащите объект, чтобы переместить.'; }
+        showPanel(equipment ? 'equipment' : 'object'); updateEquipmentPanel();
+      } else {
+        const src = sourceAt(p.x, p.y);
+        if (src) { state.selected = src.id; state.selectedWall = null; state.selectedObject = null; state.drag = { kind: 'source', id: src.id }; showPanel('signal'); renderSources(); updateEquipmentPanel(); }
+        else { const wi = findWall(room.x, room.y); if (wi >= 0) selectWall(state.walls[wi]); else { state.selectedWall = null; state.selectedObject = null; state.drag = { kind: 'camera', px: p.x, py: p.y, startX: state.cameraX, startY: state.cameraY }; showPanel(null); updateEquipmentPanel(); } }
+      }
+    }
+  });
+  canvas.addEventListener('pointermove', e => {
+    if (!state.drag) return; const p = canvasPoint(e), room = toRoom(p);
+    if (state.drag.kind === 'camera') {
+      if (Math.hypot(p.x - state.drag.px, p.y - state.drag.py) > 3) {
+        if (viewZoom() <= 1.001) state.cameraScale = 1.5;
+        state.cameraX = state.drag.startX + p.x - state.drag.px;
+        state.cameraY = state.drag.startY + p.y - state.drag.py;
+        clampCamera(); document.getElementById('zoomValue').textContent = zoomLabel();
+      }
+    }
+    else if (state.drag.kind === 'source') { const s = state.sources.find(x => x.id === state.drag.id); if (s) { s.x = clamp(room.x / ROOM_W, .015, .985); s.y = clamp(room.y / ROOM_H, .015, .985); state.audibleDirty = true; } }
+    else if (state.drag.kind === 'objectMove') { const o = state.objects.find(x => x.id === state.drag.id); if (o) { o.x = clamp(room.x - state.drag.dx, 0, ROOM_W - o.w); o.y = clamp(room.y - state.drag.dy, 0, ROOM_H - o.h); if (objectSpecs[o.type]?.kind === 'sensor') o.modelStrength = modeledStrengthAt(o); else rebuildMedium(); } }
+    else if (state.drag.kind === 'object') {
+      if (Math.hypot(p.x - state.drag.px, p.y - state.drag.py) > 8) state.drag.moved = true;
+      state.preview = { x: Math.min(state.drag.px, p.x), y: Math.min(state.drag.py, p.y), w: Math.max(18, Math.abs(p.x - state.drag.px)), h: Math.max(14, Math.abs(p.y - state.drag.py)) };
+    }
+    else {
+      if (Math.hypot(p.x - state.drag.px, p.y - state.drag.py) > 8) state.drag.moved = true;
+      const dx = p.x - state.drag.px, dy = p.y - state.drag.py, thickPx = (+ui.thickness.value / 100) * state.width / ROOM_W * viewZoom();
+      if (Math.abs(dx) >= Math.abs(dy)) state.preview = { x: Math.min(state.drag.px, p.x), y: state.drag.py - thickPx / 2, w: Math.max(2, Math.abs(dx)), h: thickPx, orientation: 'horizontal' };
+      else { const tY = (+ui.thickness.value / 100) * state.height / ROOM_H * viewZoom(); state.preview = { x: state.drag.px - tY / 2, y: Math.min(state.drag.py, p.y), w: tY, h: Math.max(2, Math.abs(dy)), orientation: 'vertical' }; }
+    }
+  });
+  function endPointer() {
+    if (state.drag?.kind === 'object') {
+      const p = state.preview, spec = objectSpecs[state.drag.type];
+      let added;
+      if (state.drag.moved && p) { const origin = toRoom({ x: p.x, y: p.y }); added = addObjectAt(origin.x, origin.y, p.w / (state.width * viewZoom()) * ROOM_W, p.h / (state.height * viewZoom()) * ROOM_H, state.drag.type); }
+      else if (spec) added = addObjectAt(state.drag.x - spec.w / 2, state.drag.y - spec.h / 2, spec.w, spec.h, state.drag.type);
+      if (added) say(`${spec.name} добавлен`);
+    }
+    if (state.drag?.kind === 'objectMove') { rebuildMedium(); updateReadouts(); updateEquipmentPanel(); }
+    if (state.drag?.kind === 'wall' && state.preview && state.drag.moved) {
+      const p = state.preview, roomStart = toRoom({ x: p.x, y: p.y });
+      const len = p.orientation === 'horizontal' ? p.w / (state.width * viewZoom()) * ROOM_W : p.h / (state.height * viewZoom()) * ROOM_H;
+      const wallX = roomStart.x + (p.orientation === 'vertical' ? +ui.thickness.value / 200 : 0);
+      const wallY = roomStart.y + (p.orientation === 'horizontal' ? +ui.thickness.value / 200 : 0);
+      if (len > .12) addWall(wallX, wallY, len, p.orientation, ui.material.value, +ui.thickness.value);
+      else say('Стена слишком короткая');
+    }
+    if (state.drag?.kind === 'source') renderSources();
+    state.drag = null; state.preview = null;
+  }
+  canvas.addEventListener('pointerup', endPointer); canvas.addEventListener('pointercancel', endPointer);
+
+  function materialIndex(key) { return Object.keys(materials).indexOf(key) + 1; }
+  const materialKeys = Object.keys(materials);
+  function configurePml(size, cellA, cellB, faceA, faceB, courant) {
+    for (let position = 0; position < size; position++) {
+      const cellDistance = Math.min(position, size - 1 - position);
+      const faceDistance = Math.min(position + .5, size - 1.5 - position);
+      const cellRamp = Math.max(0, (28 - cellDistance) / 28);
+      const faceRamp = Math.max(0, (28 - faceDistance) / 28);
+      const cellSigma = .55 * cellRamp * cellRamp, faceSigma = .55 * faceRamp * faceRamp;
+      const cellDivisor = 1 + cellSigma / 2, faceDivisor = 1 + faceSigma / 2;
+      cellA[position] = (1 - cellSigma / 2) / cellDivisor;
+      cellB[position] = courant / cellDivisor;
+      faceA[position] = (1 - faceSigma / 2) / faceDivisor;
+      faceB[position] = courant / faceDivisor;
+    }
+  }
+  function rebuildVibrationContacts() {
+    const shapes = [...state.walls, ...state.objects].filter(shape => shape.material && vibrationProps[shape.material] && !shape.broken && shape.x < ROOM_W && shape.y < ROOM_H && shape.x + shape.w > 0 && shape.y + shape.h > 0);
+    for (const shape of shapes) prepareVibration(shape);
+    state.vibrationContacts = [];
+    for (let i = 0; i < shapes.length; i++) for (let j = i + 1; j < shapes.length; j++) {
+      const a = shapes[i], b = shapes[j];
+      const gapX = Math.max(0, a.x - b.x - b.w, b.x - a.x - a.w);
+      const gapY = Math.max(0, a.y - b.y - b.h, b.y - a.y - a.h);
+      if (gapX > .25 || gapY > .25) continue;
+      const ax = clamp(b.x + b.w / 2, a.x, a.x + a.w), ay = clamp(b.y + b.h / 2, a.y, a.y + a.h);
+      const bx = clamp(a.x + a.w / 2, b.x, b.x + b.w), by = clamp(a.y + a.h / 2, b.y, b.y + b.h);
+      const aPosition = a.w >= a.h ? (ax - a.x) / Math.max(.001, a.w) : (ay - a.y) / Math.max(.001, a.h);
+      const bPosition = b.w >= b.h ? (bx - b.x) / Math.max(.001, b.w) : (by - b.y) / Math.max(.001, b.h);
+      const weight = Math.min(.55, Math.sqrt(vibrationProps[a.material].contact * vibrationProps[b.material].contact) * 1.8) * (1 - Math.max(gapX, gapY) / .3);
+      state.vibrationContacts.push({ a, b, ai: clamp(Math.round(aPosition * 39), 0, 39), bi: clamp(Math.round(bPosition * 39), 0, 39), weight });
+    }
+  }
+  function rebuildMedium() {
+    if (!state.width || !state.height) return;
+    state.audibleDirty = true;
+    state.medium.fill(0);
+    function paint(x, y, w, h, id) {
+      const x0 = clamp(PAD_X + Math.floor(x / DX), 0, NX - 1), x1 = clamp(PAD_X + Math.ceil((x + w) / DX), 0, NX - 1);
+      const y0 = clamp(PAD_Y + Math.floor(y / DY), 0, NY - 1), y1 = clamp(PAD_Y + Math.ceil((y + h) / DY), 0, NY - 1);
+      for (let row = y0; row <= y1; row++) for (let col = x0; col <= x1; col++) state.medium[row * NX + col] = id;
+    }
+    for (const shape of [...state.walls, ...state.objects]) {
+      if (!shape.material || shape.broken || shape.x + shape.w <= 0 || shape.y + shape.h <= 0 || shape.x >= ROOM_W || shape.y >= ROOM_H) continue;
+      if (vibrationProps[shape.material]) prepareVibration(shape);
+      const id = materialIndex(shape.material);
+      if (shape.type === 'hollowPipe') {
+        const shell = Math.max(Math.min(shape.w, shape.h) * .16, Math.min(DX, DY) * .4);
+        if (shape.w >= shape.h) {
+          paint(shape.x, shape.y, shape.w, shell, id);
+          paint(shape.x, shape.y + shape.h - shell, shape.w, shell, id);
+        } else {
+          paint(shape.x, shape.y, shell, shape.h, id);
+          paint(shape.x + shape.w - shell, shape.y, shell, shape.h, id);
+        }
+      } else if (shape.type === 'diffuser') {
+        const horizontal = shape.w >= shape.h, count = 8, pattern = [.35, .8, .48, 1, .58, .92, .43, .72];
+        for (let k = 0; k < count; k++) {
+          if (horizontal) { const pitch = shape.w / count, depth = shape.h * pattern[k]; paint(shape.x + k * pitch, shape.y + shape.h - depth, pitch * .65, depth, id); }
+          else { const pitch = shape.h / count, depth = shape.w * pattern[k]; paint(shape.x + shape.w - depth, shape.y + k * pitch, depth, pitch * .65, id); }
+        }
+      } else paint(shape.x, shape.y, shape.w, shape.h, id);
+    }
+    rebuildVibrationContacts();
+    for (let i = 0; i < NX * NY; i++) {
+      const m = state.medium[i] ? materials[materialKeys[state.medium[i] - 1]] : null;
+      state.coeff[i] = m ? m.speed * m.speed : 1;
+      state.damping[i] = m ? m.damping : .0007;
+    }
+    for (let y = 0; y < NY; y++) for (let x = 0; x < NX; x++) {
+      const i = y * NX + x, a = state.medium[i];
+      if (x < NX - 1) { const b = state.medium[i + 1]; state.faceX[i] = a === b ? 1 : a === 0 ? materials[materialKeys[b - 1]]?.coupling ?? 1 : b === 0 ? materials[materialKeys[a - 1]].coupling : Math.min(materials[materialKeys[a - 1]].coupling, materials[materialKeys[b - 1]].coupling); }
+      if (y < NY - 1) { const b = state.medium[i + NX]; state.faceY[i] = a === b ? 1 : a === 0 ? materials[materialKeys[b - 1]]?.coupling ?? 1 : b === 0 ? materials[materialKeys[a - 1]].coupling : Math.min(materials[materialKeys[a - 1]].coupling, materials[materialKeys[b - 1]].coupling); }
+    }
+    configurePml(NX, state.pmlCellAX, state.pmlCellBX, state.pmlFaceAX, state.pmlFaceBX, BASE_C * DT / DX);
+    configurePml(NY, state.pmlCellAY, state.pmlCellBY, state.pmlFaceAY, state.pmlFaceBY, BASE_C * DT / DY);
+  }
+
+  function injectSources() {
+    for (const src of state.sources) {
+      if (src.x < 0 || src.x > 1 || src.y < 0 || src.y > 1) continue;
+      const gx = clamp(PAD_X + Math.round(src.x * (VIEW_NX - 1)), 1, NX - 2), gy = clamp(PAD_Y + Math.round(src.y * (VIEW_NY - 1)), 1, NY - 2), i = gy * NX + gx;
+      const cellsPerWave = 50 - 44 * frequencyPitch(src.frequency);
+      const visibleFrequency = BASE_C / (Math.max(DX, DY) * cellsPerWave);
+      const phase = visibleFrequency * state.simTime, angle = 2 * Math.PI * phase;
+      let wave, amplitude = .0048;
+      if (src.emissionMode === 'pulse') {
+        if (src.pulseStartTime == null) continue;
+        const progress = (state.simTime - src.pulseStartTime) * visibleFrequency;
+        if (progress >= 1) { src.pulseStartTime = null; continue; }
+        const cycle = 2 * Math.PI * progress;
+        const oneCycle = src.type === 'noise' ? Math.random() * 2 - 1 : src.type === 'square' ? Math.tanh(4 * Math.sin(cycle)) : src.type === 'sawtooth' ? 2 * progress - 1 : Math.sin(cycle);
+        wave = oneCycle * Math.sin(Math.PI * progress) ** 2;
+        amplitude = .022;
+      } else wave = src.type === 'noise' ? Math.random() * 2 - 1 : src.type === 'square' ? Math.tanh(4 * Math.sin(angle)) : src.type === 'sawtooth' ? 2 * (phase % 1) - 1 : Math.sin(angle);
+      const amp = src.level / 100 * amplitude * (src.device === 'subwoofer' ? 1.55 : 1) * wave;
+      state.next[i] += amp;
+      state.pressureX[i] += amp * .5; state.pressureY[i] += amp * .5;
+    }
+  }
+  function pressureAt(x, y) {
+    const gx = clamp(PAD_X + Math.round(x / DX), 0, NX - 1), gy = clamp(PAD_Y + Math.round(y / DY), 0, NY - 1);
+    return state.pressure[gy * NX + gx];
+  }
+  function radiateAt(x, y, amount) {
+    if (x < 0 || y < 0 || x > ROOM_W || y > ROOM_H) return;
+    const gx = clamp(PAD_X + Math.round(x / DX), 1, NX - 2), gy = clamp(PAD_Y + Math.round(y / DY), 1, NY - 2), i = gy * NX + gx;
+    if (!state.medium[i]) {
+      state.pressure[i] += amount;
+      state.pressureX[i] += amount * .5; state.pressureY[i] += amount * .5;
+    }
+  }
+  function advanceVibration(wave, drive, stiffness, damping) {
+    const current = wave.current, previous = wave.previous, next = wave.next, last = current.length - 1;
+    for (let j = 0; j <= last; j++) {
+      const left = current[j ? j - 1 : 1], right = current[j < last ? j + 1 : last - 1];
+      next[j] = clamp((2 - damping) * current[j] - (1 - damping) * previous[j]
+        + stiffness * (left + right - 2 * current[j]) + drive(j, last), -.025, .025);
+    }
+    wave.previous = current; wave.current = next; wave.next = previous;
+  }
+  function stepStructuralVibrations() {
+    const shapes = [...state.walls, ...state.objects].filter(shape => shape.material && vibrationProps[shape.material] && !shape.broken && shape.vibration && shape.contactDrive && shape.x < ROOM_W && shape.y < ROOM_H && shape.x + shape.w > 0 && shape.y + shape.h > 0);
+    for (const shape of shapes) shape.contactDrive.fill(0);
+    for (const contact of state.vibrationContacts) {
+      const fromA = contact.a.vibration.current[contact.ai] * contact.weight;
+      const fromB = contact.b.vibration.current[contact.bi] * contact.weight;
+      contact.a.contactDrive[contact.ai] += fromB;
+      contact.b.contactDrive[contact.bi] += fromA;
+      if (contact.a.material === 'glass') contact.a.contactPeak = Math.max(contact.a.contactPeak || 0, Math.abs(fromB));
+      if (contact.b.material === 'glass') contact.b.contactPeak = Math.max(contact.b.contactPeak || 0, Math.abs(fromA));
+    }
+    for (const shape of shapes) {
+      const props = vibrationProps[shape.material];
+      const horizontal = shape.w >= shape.h, length = horizontal ? shape.w : shape.h;
+      const middle = horizontal ? shape.y + shape.h / 2 : shape.x + shape.w / 2;
+      const edgeA = horizontal ? shape.y - Math.max(DY, shape.h * .55) : shape.x - Math.max(DX, shape.w * .55);
+      const edgeB = horizontal ? shape.y + shape.h + Math.max(DY, shape.h * .55) : shape.x + shape.w + Math.max(DX, shape.w * .55);
+      const along = t => horizontal ? shape.x + length * t : shape.y + length * t;
+      const sample = (alongPosition, acrossPosition) => horizontal ? pressureAt(alongPosition, acrossPosition) : pressureAt(acrossPosition, alongPosition);
+      const emit = (alongPosition, acrossPosition, amount) => horizontal ? radiateAt(alongPosition, acrossPosition, amount) : radiateAt(acrossPosition, alongPosition, amount);
+      advanceVibration(shape.vibration, (j, last) => {
+        const pos = along(j / last);
+        return (sample(pos, edgeA) + sample(pos, edgeB)) * props.drive + shape.contactDrive[j];
+      }, props.stiffness, props.damping);
+      if (shape.type === 'hollowPipe') {
+        const mouthGap = Math.max(DX, DY) * 1.5;
+        const start = along(0) - mouthGap, end = along(1) + mouthGap;
+        advanceVibration(shape.cavity, (j, last) => {
+          const pos = along(j / last), inside = sample(pos, middle);
+          const opening = j === 0 ? sample(start, middle) : j === last ? sample(end, middle) : 0;
+          return inside * .008 + opening * .055 + shape.vibration.current[j] * .018;
+        }, .39, .019);
+        emit(start, middle, shape.cavity.current[0] * .05);
+        emit(end, middle, shape.cavity.current[shape.cavity.current.length - 1] * .05);
+      }
+      for (let j = 0; j < shape.vibration.current.length; j += 4) {
+        const pos = along(j / (shape.vibration.current.length - 1));
+        emit(pos, edgeA, shape.vibration.current[j] * props.radiate);
+        emit(pos, edgeB, shape.vibration.current[j] * props.radiate);
+      }
+    }
+  }
+  function vibrationLevel(shape) {
+    if (!shape?.vibration) return 0;
+    let peak = 0;
+    for (const value of shape.vibration.current) peak = Math.max(peak, Math.abs(value));
+    if (shape.cavity) for (const value of shape.cavity.current) peak = Math.max(peak, Math.abs(value));
+    return Math.round(clamp(peak * 12000, 0, 100));
+  }
+  function updateGlassDamage(dt) {
+    for (const wall of state.walls) {
+      if (wall.material !== 'glass' || wall.broken) continue;
+      const cx = wall.x + wall.w / 2, cy = wall.y + wall.h / 2;
+      let exposure = 0, resonantSource = 0;
+      for (const src of state.sources) {
+        if (src.emissionMode === 'pulse') continue;
+        const difference = Math.abs(src.frequency - wall.resonance);
+        if (src.level < 70 || difference > 35) continue;
+        const match = (src.level - 60) / 40 * (1 - difference / 35);
+        resonantSource = Math.max(resonantSource, match);
+        const sx = src.x * ROOM_W, sy = src.y * ROOM_H, distance = Math.hypot(sx - cx, sy - cy), range = sourceRange(src);
+        if (distance >= range) continue;
+        let transmission = 1;
+        for (const shape of [...state.walls, ...state.objects]) {
+          if (shape === wall || !shape.material || shape.broken) continue;
+          const through = lengthThroughShape(sx, sy, cx, cy, shape);
+          if (through > 0) transmission *= Math.pow(materials[shape.material].coupling, Math.max(.35, through / .2));
+        }
+        exposure += match * sourceFade(distance, range) * transmission / (1 + distance / 6);
+      }
+      // Contact force has already travelled through every touching material in the structural solver.
+      exposure += Math.min(1.5, Math.max(0, (wall.contactPeak || 0) - .000005) * 12000) * resonantSource;
+      wall.damage = clamp(wall.damage + dt * (exposure * 1.4 - (exposure ? 0 : .24)), 0, 1);
+      if (wall.damage >= 1) {
+        wall.broken = true;
+        rebuildMedium();
+        updateReadouts();
+        say(`Стекло разбилось: резонанс ${wall.resonance} Гц`);
+      }
+    }
+  }
+  function stepField() {
+    const steps = state.sources.some(src => src.emissionMode === 'pulse') ? 4 : STEPS_PER_FRAME;
+    for (const wall of state.walls) if (wall.material === 'glass') wall.contactPeak = 0;
+    for (let step = 0; step < steps; step++) {
+      const p = state.pressure, next = state.next, vx = state.velocityX, vy = state.velocityY;
+      const px = state.pressureX, py = state.pressureY;
+      for (let y = 0; y < NY; y++) {
+        const row = y * NX;
+        for (let x = 0; x < NX; x++) {
+          const i = row + x;
+          if (x < NX - 1) {
+            const materialLoss = 1 - (state.damping[i] + state.damping[i + 1]) * .25;
+            vx[i] = vx[i] * state.pmlFaceAX[x] * materialLoss - state.pmlFaceBX[x] * state.faceX[i] * (p[i + 1] - p[i]);
+          } else vx[i] = 0;
+          if (y < NY - 1) {
+            const materialLoss = 1 - (state.damping[i] + state.damping[i + NX]) * .25;
+            vy[i] = vy[i] * state.pmlFaceAY[y] * materialLoss - state.pmlFaceBY[y] * state.faceY[i] * (p[i + NX] - p[i]);
+          } else vy[i] = 0;
+        }
+      }
+      for (let y = 0; y < NY; y++) {
+        const row = y * NX;
+        for (let x = 0; x < NX; x++) {
+          const i = row + x, materialLoss = 1 - state.damping[i] * .5;
+          const divergenceX = (x < NX - 1 ? vx[i] : 0) - (x ? vx[i - 1] : 0);
+          const divergenceY = (y < NY - 1 ? vy[i] : 0) - (y ? vy[i - NX] : 0);
+          px[i] = materialLoss * (state.pmlCellAX[x] * px[i] - state.pmlCellBX[x] * state.coeff[i] * divergenceX);
+          py[i] = materialLoss * (state.pmlCellAY[y] * py[i] - state.pmlCellBY[y] * state.coeff[i] * divergenceY);
+          next[i] = px[i] + py[i];
+        }
+      }
+      state.simTime += DT;
+      injectSources();
+      state.pressure = next; state.next = p;
+      stepStructuralVibrations();
+      sampleEquipmentSensors();
+    }
+  }
+  function updateAudibleMask() {
+    const shapes = [...state.walls, ...state.objects].filter(shape => shape.material && !shape.broken);
+    const active = state.sources.filter(src => src.level > 0).map(src => {
+      const x = src.x * ROOM_W, y = src.y * ROOM_H;
+      return { x, y, range: sourceRange(src), enclosed: isSourceEnclosed(x, y, shapes) };
+    });
+    for (let y = 0; y < NY; y++) for (let x = 0; x < NX; x++) {
+      const wx = (x - PAD_X) * DX, wy = (y - PAD_Y) * DY;
+      let strongest = 0;
+      for (const src of active) {
+        const dx = wx - src.x, dy = wy - src.y, distanceSquared = dx * dx + dy * dy;
+        if (distanceSquared >= src.range * src.range) continue;
+        const transmission = src.enclosed ? transmissionBetween(src.x, src.y, wx, wy, shapes) : 1;
+        strongest = Math.max(strongest, sourceFade(Math.sqrt(distanceSquared), src.range) * transmission * transmission);
+      }
+      state.audibleMask[y * NX + x] = strongest;
+    }
+    state.audibleDirty = false;
+  }
+  function pressureImage() {
+    if (state.audibleDirty) updateAudibleMask();
+    const data = image.data;
+    for (let y = 0; y < VIEW_NY; y++) for (let x = 0; x < VIEW_NX; x++) {
+      const i = (y + PAD_Y) * NX + x + PAD_X, q = (y * VIEW_NX + x) * 4;
+      const p = clamp(state.pressure[i] * state.audibleMask[i] * 110, -1, 1), a = Math.pow(Math.abs(p), .7), blend = clamp(a * 1.05, 0, 1);
+      if (p >= 0) { data[q] = 8 + 247 * blend; data[q + 1] = 20 + 148 * blend; data[q + 2] = 25 + 55 * blend; }
+      else { data[q] = 8 + 47 * blend; data[q + 1] = 20 + 170 * blend; data[q + 2] = 25 + 230 * blend; }
+      data[q + 3] = 255;
+    }
+    fieldCtx.putImageData(image, 0, 0);
+  }
+  function sensorIndex(o) {
+    const x = clamp(PAD_X + Math.round((o.x + o.w / 2) / DX), 0, NX - 1), y = clamp(PAD_Y + Math.round((o.y + o.h / 2) / DY), 0, NY - 1);
+    return y * NX + x;
+  }
+  function lengthThroughShape(x0, y0, x1, y1, shape) {
+    const dx = x1 - x0, dy = y1 - y0, length = Math.hypot(dx, dy);
+    if (length < .0001) return 0;
+    let enter = 0, leave = 1;
+    for (const [start, delta, low, high] of [[x0, dx, shape.x, shape.x + shape.w], [y0, dy, shape.y, shape.y + shape.h]]) {
+      if (Math.abs(delta) < 1e-9) { if (start < low || start > high) return 0; continue; }
+      let a = (low - start) / delta, b = (high - start) / delta;
+      if (a > b) [a, b] = [b, a];
+      enter = Math.max(enter, a); leave = Math.min(leave, b);
+      if (leave <= enter) return 0;
+    }
+    return (leave - enter) * length;
+  }
+  function travelsThroughPipeOpening(x0, y0, x1, y1, pipe) {
+    const dx = x1 - x0, dy = y1 - y0, horizontal = pipe.w >= pipe.h;
+    if (horizontal) {
+      if (Math.abs(dx) < Math.abs(dy) * 2 || Math.abs(dx) < .001) return false;
+      const atLeft = y0 + dy * (pipe.x - x0) / dx, atRight = y0 + dy * (pipe.x + pipe.w - x0) / dx;
+      return [atLeft, atRight].every(y => y > pipe.y + pipe.h * .22 && y < pipe.y + pipe.h * .78);
+    }
+    if (Math.abs(dy) < Math.abs(dx) * 2 || Math.abs(dy) < .001) return false;
+    const atTop = x0 + dx * (pipe.y - y0) / dy, atBottom = x0 + dx * (pipe.y + pipe.h - y0) / dy;
+    return [atTop, atBottom].every(x => x > pipe.x + pipe.w * .22 && x < pipe.x + pipe.w * .78);
+  }
+  function transmissionBetween(x0, y0, x1, y1, shapes) {
+    let transmission = 1;
+    for (const shape of shapes) {
+      if (!shape.material || shape.broken) continue;
+      const through = lengthThroughShape(x0, y0, x1, y1, shape);
+      if (through <= 0) continue;
+      transmission *= shape.type === 'hollowPipe' && travelsThroughPipeOpening(x0, y0, x1, y1, shape)
+        ? .88 : Math.pow(materials[shape.material].coupling, Math.max(.35, through / .2));
+      if (transmission < .0001) return 0;
+    }
+    return transmission;
+  }
+  function isSourceEnclosed(x, y, shapes) {
+    if (!shapes.length) return false;
+    const rayLength = Math.hypot(ROOM_W, ROOM_H) * 2;
+    for (let ray = 0; ray < 64; ray++) {
+      const angle = Math.PI * 2 * (ray + .23) / 64;
+      const farX = x + Math.cos(angle) * rayLength, farY = y + Math.sin(angle) * rayLength;
+      let blocked = false;
+      for (const shape of shapes) {
+        if (materials[shape.material].coupling >= .85) continue;
+        if (lengthThroughShape(x, y, farX, farY, shape) > .00001) { blocked = true; break; }
+      }
+      if (!blocked) return false;
+    }
+    return true;
+  }
+  function modeledStrengthAt(o) {
+    const x = o.x + o.w / 2, y = o.y + o.h / 2;
+    let energy = 0;
+    const shapes = [...state.walls, ...state.objects];
+    for (const src of state.sources) {
+      if (src.emissionMode === 'pulse') continue;
+      const sx = src.x * ROOM_W, sy = src.y * ROOM_H, distance = Math.hypot(x - sx, y - sy), range = sourceRange(src);
+      if (!range || distance >= range) continue;
+      const transmission = transmissionBetween(sx, sy, x, y, shapes);
+      const strength = src.level / 100 * sourceFade(distance, range) * transmission / (1 + distance / 2) * (src.device === 'subwoofer' ? 1.2 : 1);
+      energy += strength * strength;
+    }
+    return Math.sqrt(energy);
+  }
+  function refreshModeledSensors() { for (const o of state.objects) if (objectSpecs[o.type]?.kind === 'sensor') o.modelStrength = Math.hypot(modeledStrengthAt(o), state.sources.some(src => src.emissionMode === 'pulse') ? Math.sqrt(o.energy || 0) * 20 : 0); }
+  function closestSourceDistance(o) { const x = o.x + o.w / 2, y = o.y + o.h / 2; return Math.min(...state.sources.map(src => Math.hypot(x - src.x * ROOM_W, y - src.y * ROOM_H))); }
+  function sampleEquipmentSensors() {
+    if (state.audibleDirty) updateAudibleMask();
+    for (const o of state.objects) {
+      if (objectSpecs[o.type]?.kind !== 'sensor') continue;
+      const index = sensorIndex(o), pressure = state.pressure[index] * state.audibleMask[index];
+      o.energy = (o.energy || 0) * .985 + pressure * pressure * .015;
+      if (!o.trace) { o.trace = new Float32Array(256); o.tracePos = 0; o.traceCount = 0; }
+      o.trace[o.tracePos] = pressure;
+      o.tracePos = (o.tracePos + 1) % o.trace.length;
+      o.traceCount = Math.min(o.traceCount + 1, o.trace.length);
+    }
+  }
+  function spectrumAt(o) {
+    const bands = [0, 0, 0, 0, 0], length = 256;
+    if ((o.modelStrength || 0) < .0005 || !o.trace || o.traceCount < length) return { bands, dominantFrequency: null };
+    let strongest = 0, dominantFrequency = null;
+    for (let sample = 0; sample <= 36; sample++) {
+      const frequency = 80 * Math.pow(1000 / 80, sample / 36), cellsPerWave = 50 - 44 * frequencyPitch(frequency);
+      const angle = 2 * Math.PI * BASE_C * DT / (Math.max(DX, DY) * cellsPerWave), stepC = Math.cos(angle), stepS = Math.sin(angle);
+      let re = 0, im = 0, c = 1, s = 0;
+      for (let n = 0; n < length; n++) {
+        const value = o.trace[(o.tracePos + n) % length] * (.5 - .5 * Math.cos(2 * Math.PI * n / (length - 1)));
+        re += value * c; im += value * s;
+        const nextC = c * stepC - s * stepS; s = s * stepC + c * stepS; c = nextC;
+      }
+      const amplitude = Math.hypot(re, im) * 4 / length, power = amplitude * amplitude;
+      const band = frequency < 160 ? 0 : frequency < 300 ? 1 : frequency < 500 ? 2 : frequency < 750 ? 3 : 4;
+      bands[band] += power;
+      if (power > strongest) { strongest = power; dominantFrequency = Math.round(frequency); }
+    }
+    return { bands, dominantFrequency: strongest > 1e-10 ? dominantFrequency : null };
+  }
+  function refreshAnalyzers() { for (const o of state.objects) if (o.type === 'analyzer') o.spectrum = spectrumAt(o); }
+  function relativeLevel(o) { return clamp(Math.round(Math.sqrt(o.modelStrength || 0) * 100), 0, 100); }
+  function meterDb(o) { const strength = o.modelStrength || 0; return strength < .0005 ? 0 : Math.round(clamp(78 + 20 * Math.log10(strength), 0, 100)); }
+  function nearestVibratingTarget(o) {
+    const cx = o.x + o.w / 2, cy = o.y + o.h / 2;
+    let closest = null, shortest = Infinity;
+    for (const shape of [...state.walls, ...state.objects]) {
+      if (!vibrationProps[shape.material]) continue;
+      const dx = Math.max(shape.x - cx, 0, cx - shape.x - shape.w), dy = Math.max(shape.y - cy, 0, cy - shape.y - shape.h), distance = Math.hypot(dx, dy);
+      if (distance < shortest) { shortest = distance; closest = shape; }
+    }
+    return shortest <= 1.2 ? closest : null;
+  }
+  function drawEquipmentChart(o, spectrum) {
+    const chart = ui.equipmentChart, c = chart.getContext('2d'), w = chart.width, h = chart.height;
+    c.clearRect(0, 0, w, h); c.fillStyle = '#0b171d'; c.fillRect(0, 0, w, h);
+    c.strokeStyle = '#254049'; c.lineWidth = 1; c.beginPath(); c.moveTo(0, h / 2); c.lineTo(w, h / 2); c.stroke();
+    if (o.type === 'oscilloscope') {
+      const count = (o.modelStrength || 0) < .0005 ? 0 : Math.min(o.traceCount || 0, 224); c.strokeStyle = '#b5ff74'; c.lineWidth = 1.7; c.beginPath();
+      for (let n = 0; n < count; n++) { const value = o.trace[(o.tracePos - count + n + 256) % 256], x = n / Math.max(1, count - 1) * w, y = h / 2 - clamp(value * 140, -1, 1) * h * .42; if (n === 0) c.moveTo(x, y); else c.lineTo(x, y); }
+      c.stroke();
+    } else if (o.type === 'analyzer') {
+      const bands = spectrum.bands, maximum = Math.max(1e-8, ...bands);
+      bands.forEach((value, index) => { const barHeight = value > 1e-9 ? Math.max(2, value / maximum * (h - 18)) : 0; c.fillStyle = ['#6ec8ff', '#82d2ff', '#b5ff74', '#ffcf79', '#ff9874'][index]; c.fillRect(8 + index * 43, h - 15 - barHeight, 26, barHeight); });
+      c.fillStyle = '#9db7b4'; c.font = '9px system-ui'; ['80', '160', '300', '500', '750+'].forEach((label, i) => c.fillText(label, 8 + i * 43, h - 3));
+    }
+  }
+  function updateEquipmentPanel() {
+    const o = state.objects.find(item => item.id === state.selectedObject);
+    ui.equipmentReadout.hidden = !o;
+    if (!o) return;
+    const spec = objectSpecs[o.type], relative = relativeLevel(o);
+    ui.equipmentX.max = ROOM_W; ui.equipmentY.max = ROOM_H;
+    if (document.activeElement !== ui.equipmentX) ui.equipmentX.value = Number((o.x + o.w / 2).toFixed(1));
+    if (document.activeElement !== ui.equipmentY) ui.equipmentY.value = Number((o.y + o.h / 2).toFixed(1));
+    ui.equipmentName.textContent = spec.name;
+    ui.equipmentDescription.textContent = spec.description || `Материал: ${materials[o.material]?.name || 'нет'}.`;
+    if (o.type === 'levelMeter' || o.type === 'microphone') ui.equipmentDescription.textContent = `${spec.description} До ближайшего источника ${db(closestSourceDistance(o).toFixed(1))} м.`;
+    ui.equipmentChart.hidden = !['oscilloscope', 'analyzer'].includes(o.type);
+    if (o.type === 'microphone') ui.equipmentValue.textContent = `${relative}%`;
+    else if (o.type === 'levelMeter') ui.equipmentValue.textContent = `${meterDb(o)} дБ*`;
+    else if (o.type === 'oscilloscope') { ui.equipmentValue.textContent = `${relative}%`; drawEquipmentChart(o); }
+    else if (o.type === 'analyzer') { const spectrum = o.spectrum || { bands: [0, 0, 0, 0, 0], dominantFrequency: null }; ui.equipmentValue.textContent = spectrum.dominantFrequency ? `≈ ${spectrum.dominantFrequency} Гц` : 'нет сигнала'; drawEquipmentChart(o, spectrum); }
+    else if (o.type === 'vibration') {
+      const target = nearestVibratingTarget(o);
+      ui.equipmentValue.textContent = !target ? 'нет объекта' : target.broken ? 'разбито' : `${vibrationLevel(target)}% вибр.`;
+      if (target?.material === 'glass') ui.equipmentDescription.textContent = `Стекло: резонанс ${target.resonance} Гц, повреждение ${Math.round(target.damage * 100)}%. Показана текущая вибрация.`;
+      else if (target) ui.equipmentDescription.textContent = `${target.type === 'hollowPipe' ? 'Труба: стенки и воздух внутри' : materials[target.material].name}: относительная амплитуда вибрации.${target.material === 'rubber' ? ' Резина быстро гасит полученные колебания.' : ''}`;
+    } else if (o.type === 'metalBeam' || o.type === 'hollowPipe') {
+      ui.equipmentValue.textContent = `${vibrationLevel(o)}% вибр.`;
+      if (o.type === 'hollowPipe') ui.equipmentDescription.textContent += ` Открытая труба: основной тон около ${Math.round(BASE_C / (2 * Math.max(o.w, o.h)))} Гц.`;
+    } else if (o.type === 'bassTrap') ui.equipmentValue.textContent = `↓ ${materials.bass.absorption}%`;
+    else if (o.type === 'diffuser') ui.equipmentValue.textContent = 'рассеивание';
+    else ui.equipmentValue.textContent = materials[o.material] ? `↗ ${materials[o.material].reflection}%` : 'готово';
+  }
+  function drawGrid() {
+    ctx.strokeStyle = '#b9eee20b'; ctx.lineWidth = 1;
+    const step = Math.max(26, Math.round(Math.min(state.width, state.height) / 16));
+    const z = viewZoom(), left = state.width * (.5 - z / 2) + state.cameraX, top = state.height * (.5 - z / 2) + state.cameraY, right = left + state.width * z, bottom = top + state.height * z;
+    ctx.save(); ctx.beginPath(); ctx.rect(left, top, right - left, bottom - top); ctx.clip();
+    for (let x = left + step * z; x < right; x += step * z) { ctx.beginPath(); ctx.moveTo(x, top); ctx.lineTo(x, bottom); ctx.stroke(); }
+    for (let y = top + step * z; y < bottom; y += step * z) { ctx.beginPath(); ctx.moveTo(left, y); ctx.lineTo(right, y); ctx.stroke(); }
+    ctx.restore();
+  }
+  function drawStructuralWaves(shape, x, y, w, h) {
+    if (!shape.vibration || vibrationLevel(shape) === 0 || Math.max(w, h) < 18) return;
+    const horizontal = w >= h, span = horizontal ? w : h, thickness = horizontal ? h : w;
+    const traces = [{ values: shape.vibration.current, color: vibrationProps[shape.material]?.color || '#ffe08a' }];
+    if (shape.cavity) traces.push({ values: shape.cavity.current, color: '#79e9ff' });
+    ctx.save();
+    for (const trace of traces) {
+      ctx.beginPath();
+      for (let j = 0; j < trace.values.length; j++) {
+        const t = j / (trace.values.length - 1), displacement = Math.tanh(trace.values[j] * 9000) * Math.min(7, Math.max(2, thickness * .35));
+        const px = horizontal ? x + span * t : x + w / 2 + displacement;
+        const py = horizontal ? y + h / 2 + displacement : y + span * t;
+        if (!j) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.strokeStyle = trace.color; ctx.lineWidth = 2; ctx.shadowColor = trace.color; ctx.shadowBlur = 9; ctx.stroke();
+    }
+    ctx.restore();
+  }
+  function drawWalls() {
+    for (const wall of state.walls) {
+      const m = materials[wall.material], a = toCanvas(wall.x, wall.y), b = toCanvas(wall.x + wall.w, wall.y + wall.h), x = a.x, y = a.y, ww = b.x - a.x, hh = b.y - a.y;
+      if (wall.broken) {
+        ctx.save(); ctx.strokeStyle = '#a9e7ef88'; ctx.lineWidth = 1.5; ctx.setLineDash([4, 6]); ctx.strokeRect(x, y, ww, hh); ctx.setLineDash([]);
+        const horizontal = ww >= hh, span = horizontal ? ww : hh;
+        ctx.strokeStyle = '#c9f7ffaa';
+        for (let k = .1; k < 1; k += .2) {
+          const sx = horizontal ? x + span * k : x + ww * .5, sy = horizontal ? y + hh * .5 : y + span * k;
+          ctx.beginPath(); ctx.moveTo(sx - 4, sy - 4); ctx.lineTo(sx + 3, sy + 2); ctx.moveTo(sx + 3, sy - 3); ctx.lineTo(sx - 2, sy + 4); ctx.stroke();
+        }
+        if (span > 65) { ctx.fillStyle = '#c9f7ff'; ctx.font = '600 10px system-ui'; ctx.textAlign = 'center'; ctx.fillText('РАЗБИТО', x + ww / 2, y + hh / 2 - 8); }
+        if (wall === state.selectedWall) { ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.strokeRect(x - 4, y - 4, ww + 8, hh + 8); }
+        ctx.restore(); continue;
+      }
+      ctx.fillStyle = m.color + '39'; ctx.strokeStyle = m.color + 'e0'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.roundRect(x, y, ww, hh, 3); ctx.fill(); ctx.stroke();
+      ctx.save(); ctx.beginPath(); ctx.rect(x, y, ww, hh); ctx.clip(); ctx.strokeStyle = m.color + '89'; ctx.lineWidth = 1;
+      const hatch = Math.max(5, Math.min(12, (ww + hh) / 15));
+      for (let k = -hh; k < ww + hh; k += hatch) { ctx.beginPath(); ctx.moveTo(x + k, y); ctx.lineTo(x + k + hh, y + hh); ctx.stroke(); }
+      ctx.restore();
+      if (wall.vibration) drawStructuralWaves(wall, x, y, ww, hh);
+      if (wall.material === 'glass' && wall.damage > .08) {
+        ctx.save(); ctx.strokeStyle = '#efffffd9'; ctx.lineWidth = 1 + wall.damage;
+        ctx.beginPath(); ctx.moveTo(x + ww * .18, y + hh * .2); ctx.lineTo(x + ww * .46, y + hh * .52); ctx.lineTo(x + ww * .7, y + hh * .28); ctx.lineTo(x + ww * .86, y + hh * .78); ctx.stroke(); ctx.restore();
+      }
+      if (wall.material === 'glass' && Math.max(ww, hh) > 65) {
+        ctx.save(); ctx.fillStyle = '#c9f7ff'; ctx.font = '600 10px system-ui'; ctx.textAlign = 'center';
+        ctx.fillText(`${wall.resonance} Гц`, x + ww / 2, y + hh / 2 - 7);
+        ctx.restore();
+      }
+      if (wall === state.selectedWall) { ctx.save(); ctx.strokeStyle = '#f5fff0'; ctx.lineWidth = 2; ctx.setLineDash([5, 4]); ctx.strokeRect(x - 4, y - 4, ww + 8, hh + 8); ctx.restore(); }
+    }
+  }
+  function sensorLabel(o) {
+    if (o.type === 'levelMeter') return `${meterDb(o)} дБ*`;
+    if (o.type === 'microphone') return `${relativeLevel(o)}%`;
+    if (o.type === 'oscilloscope') return `${relativeLevel(o)}% · волна`;
+    if (o.type === 'analyzer') return o.spectrum?.dominantFrequency ? `${o.spectrum.dominantFrequency} Гц` : 'нет сигнала';
+    if (o.type === 'vibration') { const target = nearestVibratingTarget(o); return target ? target.broken ? 'разбито' : `${vibrationLevel(target)}% вибр.` : 'нет объекта'; }
+    return '';
+  }
+  function drawSensorLabel(o, x, y, color) {
+    const label = sensorLabel(o); if (!label) return;
+    ctx.save(); ctx.font = '700 11px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const width = Math.max(48, ctx.measureText(label).width + 16), left = clamp(x - width / 2, 3, Math.max(3, state.width - width - 3)), top = clamp(y - 39, 3, Math.max(3, state.height - 23));
+    ctx.fillStyle = '#09181eea'; ctx.strokeStyle = color + 'c9'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.roundRect(left, top, width, 21, 6); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#f4fff7'; ctx.fillText(label, left + width / 2, top + 10.5);
+    ctx.restore();
+  }
+  function drawObjects() {
+    for (const o of state.objects) {
+      const spec = objectSpecs[o.type], m = o.material ? materials[o.material] : null, a = toCanvas(o.x, o.y), b = toCanvas(o.x + o.w, o.y + o.h), x = a.x, y = a.y, w = b.x - a.x, h = b.y - a.y;
+      if (spec.kind === 'sensor') {
+        const cx = x + w / 2, cy = y + h / 2, selectedObject = o.id === state.selectedObject;
+        ctx.save(); ctx.fillStyle = '#0c1e24'; ctx.strokeStyle = spec.color; ctx.lineWidth = selectedObject ? 2.5 : 1.5;
+        ctx.shadowColor = spec.color; ctx.shadowBlur = selectedObject ? 13 : 5;
+        ctx.beginPath(); ctx.arc(cx, cy, 11, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); ctx.shadowBlur = 0;
+        ctx.fillStyle = spec.color; ctx.font = '700 8px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(spec.symbol.slice(0, 3), cx, cy);
+        ctx.restore(); drawSensorLabel(o, cx, cy, spec.color); continue;
+      }
+      ctx.save(); ctx.fillStyle = m.color + '6b'; ctx.strokeStyle = m.color; ctx.lineWidth = 1.4;
+      ctx.beginPath(); ctx.roundRect(x, y, w, h, Math.min(9, Math.max(3, Math.min(w, h) * .16))); if (o.type !== 'diffuser') ctx.fill(); ctx.stroke();
+      if (o.type === 'hollowPipe') {
+        ctx.fillStyle = '#081418';
+        if (w >= h) ctx.fillRect(x, y + h * .22, w, h * .56);
+        else ctx.fillRect(x + w * .22, y, w * .56, h);
+      }
+      if (o.type === 'diffuser') {
+        const pattern = [.35, .8, .48, 1, .58, .92, .43, .72]; ctx.fillStyle = m.color + 'bd';
+        for (let k = 0; k < 8; k++) { if (w >= h) ctx.fillRect(x + k * w / 8, y + h * (1 - pattern[k]), w / 8 * .65, h * pattern[k]); else ctx.fillRect(x + w * (1 - pattern[k]), y + k * h / 8, w * pattern[k], h / 8 * .65); }
+      }
+      if (o.type === 'table') { ctx.strokeStyle = '#071115aa'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(x + w * .18, y + h * .72); ctx.lineTo(x + w * .82, y + h * .72); ctx.moveTo(x + w * .24, y + h * .72); ctx.lineTo(x + w * .2, y + h * .98); ctx.moveTo(x + w * .76, y + h * .72); ctx.lineTo(x + w * .8, y + h * .98); ctx.stroke(); }
+      if (o.vibration) drawStructuralWaves(o, x, y, w, h);
+      if (w > 48 && h > 25 && !['metalBeam', 'hollowPipe'].includes(o.type)) { ctx.fillStyle = '#091419'; ctx.font = '600 9px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(o.symbol, x + w / 2, y + h / 2, w - 8); }
+      if (o.id === state.selectedObject) { ctx.strokeStyle = '#f2fff0'; ctx.setLineDash([3, 3]); ctx.strokeRect(x - 3, y - 3, w + 6, h + 6); ctx.setLineDash([]); }
+      ctx.restore();
+    }
+  }
+  function drawSources() {
+    for (const s of state.sources) {
+      const p = toCanvas(s.x * ROOM_W, s.y * ROOM_H), x = p.x, y = p.y;
+      const rangePixels = sourceRange(s) * state.width / ROOM_W * viewZoom();
+      if (rangePixels > 10 && rangePixels < Math.max(state.width, state.height) * 3) {
+        ctx.save(); ctx.strokeStyle = s.color + '45'; ctx.lineWidth = 1; ctx.setLineDash([4, 8]);
+        ctx.beginPath(); ctx.arc(x, y, rangePixels, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+      }
+      ctx.save(); ctx.strokeStyle = s.color + '42'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, y, 18, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = s.color; ctx.shadowColor = s.color; ctx.shadowBlur = 17; ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowBlur = 0; ctx.strokeStyle = s.id === state.selected ? '#ffffff' : s.color; ctx.lineWidth = s.id === state.selected ? 2 : 1; ctx.beginPath(); ctx.arc(x, y, 10, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = '#071115'; ctx.font = '700 8px system-ui'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(String(s.id).padStart(2, '0'), x, y);
+      if (s.device) { ctx.fillStyle = s.color; ctx.font = '700 9px system-ui'; ctx.fillText(objectSpecs[s.device].symbol, x, y - 25); }
+      ctx.restore();
+    }
+  }
+  function updateSweeps(dt) {
+    for (const src of state.sources) {
+      if (src.device !== 'toneGenerator' || !src.sweep || src.emissionMode === 'pulse') continue;
+      src.sweepElapsed = (src.sweepElapsed || 0) + dt;
+      src.frequency = 80 + Math.round((src.sweepElapsed % 8) / 8 * 920);
+    }
+  }
+  let lastEquipmentUpdate = 0;
+  function draw(now) {
+    const dt = Math.min(.06, (now - lastFrame) / 1000); lastFrame = now;
+    if (state.running) { updateSweeps(dt); stepField(); updateGlassDamage(dt); }
+    if (now - lastEquipmentUpdate > 100) { refreshModeledSensors(); refreshAnalyzers(); if (state.sources.some(src => src.sweep)) { ui.freq.value = selected().frequency; updateReadouts(); } updateEquipmentPanel(); lastEquipmentUpdate = now; }
+    pressureImage();
+    ctx.fillStyle = '#081418'; ctx.fillRect(0, 0, state.width, state.height);
+    ctx.imageSmoothingEnabled = true; ctx.filter = 'blur(.45px)';
+    const z = viewZoom(), left = state.width * (.5 - z / 2) + state.cameraX, top = state.height * (.5 - z / 2) + state.cameraY, viewWidth = state.width * z, viewHeight = state.height * z;
+    ctx.drawImage(fieldCanvas, left - 1, top - 1, viewWidth + 2, viewHeight + 2); ctx.filter = 'none';
+    drawGrid(); drawWalls(); drawObjects(); drawSources();
+    if (state.preview) { ctx.fillStyle = '#b5ff7420'; ctx.strokeStyle = '#b5ff74'; ctx.setLineDash([5, 4]); ctx.fillRect(state.preview.x, state.preview.y, state.preview.w, state.preview.h); ctx.strokeRect(state.preview.x, state.preview.y, state.preview.w, state.preview.h); ctx.setLineDash([]); }
+    requestAnimationFrame(draw);
+  }
+
+  function clearField() {
+    state.pressure.fill(0); state.next.fill(0); state.pressureX.fill(0); state.pressureY.fill(0);
+    state.velocityX.fill(0); state.velocityY.fill(0); state.simTime = 0;
+    state.audibleDirty = true;
+    for (const src of state.sources) src.pulseStartTime = null;
+    for (const shape of [...state.walls, ...state.objects]) for (const wave of [shape.vibration, shape.cavity]) {
+      if (wave) { wave.current.fill(0); wave.previous.fill(0); wave.next.fill(0); }
+      shape.contactPeak = 0;
+    }
+    for (const o of state.objects) if (objectSpecs[o.type]?.kind === 'sensor') { o.energy = 0; o.tracePos = 0; o.traceCount = 0; if (o.trace) o.trace.fill(0); o.spectrum = null; }
+  }
+  document.getElementById('pauseBtn').addEventListener('click', () => {
+    state.running = !state.running; ui.pauseText.textContent = state.running ? 'Пауза' : 'Продолжить';
+    ui.pauseText.previousElementSibling.textContent = state.running ? 'Ⅱ' : '▶';
+    ui.simState.textContent = state.running ? 'Волновое поле обновляется' : 'Симуляция приостановлена';
+    ui.simDot.classList.toggle('on', state.running);
+  });
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    for (const src of state.sources) stopSourceAudio(src);
+    state.walls = []; state.objects = []; state.nextObjectId = 1; state.selectedObject = null; state.selectedWall = null; document.getElementById('objectType').value = 'table'; ui.equipmentType.value = 'microphone'; state.zoom = 1; state.cameraScale = 1; state.cameraX = 0; state.cameraY = 0;
+    ui.mapSize.value = '18x12'; setMapSize(18, 12);
+    state.sources = [{ id: 1, x: .27, y: .52, frequency: 340, level: 65, type: 'sine', emissionMode: 'continuous', color: sourceColors[0], audio: null }];
+    state.selected = 1; state.nextId = 2; setTool('source'); clearField(); rebuildMedium(); renderSources(); updateEquipmentPanel(); say('Сцена сброшена');
+  });
+  document.getElementById('viewBtn').addEventListener('click', () => { clearField(); say('Волновое поле очищено'); });
+  document.getElementById('layerPreset').addEventListener('click', () => {
+    state.walls.push(
+      { x: ROOM_W * 7.55 / 18, y: 0, w: .2, h: ROOM_H, material: 'concrete' },
+      { x: ROOM_W * 7.75 / 18, y: 0, w: .3, h: ROOM_H, material: 'mineral' },
+      { x: ROOM_W * 8.05 / 18, y: 0, w: .2, h: ROOM_H, material: 'concrete' }
+    );
+    ui.material.value = 'concrete'; ui.thickness.value = '20';
+    rebuildMedium(); updateReadouts(); say('Добавлены слои: бетон — минеральная вата — бетон');
+  });
+
+  function stopSourceAudio(src) {
+    if (!src?.audio) return;
+    try { src.audio.node.stop(); } catch { }
+    try { src.audio.node.disconnect(); src.audio.gain.disconnect(); src.audio.pan.disconnect(); } catch { }
+    src.audio = null;
+  }
+  function createAudio() {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) { say('Браузер не поддерживает воспроизведение звука'); return false; }
+    if (!state.audio) { const ac = new AC(), master = ac.createGain(); master.gain.value = .55; master.connect(ac.destination); state.audio = { ac, master }; }
+    return true;
+  }
+  function createSourceAudio(src) {
+    const { ac, master } = state.audio, gain = ac.createGain(), pan = ac.createStereoPanner();
+    let node;
+    if (src.type === 'noise') {
+      const buffer = ac.createBuffer(1, ac.sampleRate * 2, ac.sampleRate), data = buffer.getChannelData(0);
+      for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+      node = ac.createBufferSource(); node.buffer = buffer; node.loop = true;
+    } else { node = ac.createOscillator(); node.type = src.type; node.frequency.value = src.frequency; }
+    node.connect(gain); gain.connect(pan); pan.connect(master); node.start();
+    src.audio = { node, gain, pan, type: src.type };
+  }
+  function playPulseAudio(src, scheduledStart) {
+    if (!state.audioOn || !state.audio || src.level <= 0) return;
+    const { ac, master } = state.audio, node = ac.createOscillator(), gain = ac.createGain(), pan = ac.createStereoPanner();
+    const start = Math.max(ac.currentTime, scheduledStart ?? ac.currentTime), duration = 1 / src.frequency;
+    node.type = src.type === 'noise' ? 'sine' : src.type; node.frequency.value = src.frequency;
+    gain.gain.setValueAtTime(0, start);
+    gain.gain.linearRampToValueAtTime(src.level / 100 * .2, start + duration * .25);
+    gain.gain.linearRampToValueAtTime(0, start + duration);
+    pan.pan.value = clamp((src.x - .5) * 1.6, -1, 1);
+    node.connect(gain); gain.connect(pan); pan.connect(master);
+    node.onended = () => { node.disconnect(); gain.disconnect(); pan.disconnect(); };
+    node.start(start); node.stop(start + duration);
+  }
+  function syncAudio() {
+    if (!state.audio || !state.audioOn) return;
+    const { ac } = state.audio, continuous = state.sources.filter(src => src.emissionMode !== 'pulse'), count = Math.sqrt(Math.max(1, continuous.length));
+    for (const src of state.sources) {
+      if (src.emissionMode === 'pulse') { stopSourceAudio(src); continue; }
+      if (src.audio && src.audio.type !== src.type) stopSourceAudio(src);
+      if (!src.audio) createSourceAudio(src);
+      if (src.audio.node.frequency) src.audio.node.frequency.setTargetAtTime(src.frequency, ac.currentTime, .025);
+      src.audio.gain.gain.setTargetAtTime(src.level / 100 * .11 / count * (src.device === 'subwoofer' ? 1.3 : 1), ac.currentTime, .04);
+      src.audio.pan.pan.setTargetAtTime(clamp((src.x - .5) * 1.6, -1, 1), ac.currentTime, .04);
+    }
+    ui.soundState.textContent = continuous.length ? `Звучат ${continuous.length} ${continuous.length === 1 ? 'источник' : continuous.length < 5 ? 'источника' : 'источников'} · громкость ограничена` : 'Аудио включено · одиночная волна прозвучит по кнопке';
+  }
+  ui.soundBtn.addEventListener('click', async () => {
+    if (!createAudio()) return;
+    if (state.audio.ac.state === 'suspended') await state.audio.ac.resume();
+    state.audioOn = !state.audioOn;
+    if (state.audioOn) syncAudio(); else for (const src of state.sources) stopSourceAudio(src);
+    ui.soundBtnText.textContent = state.audioOn ? 'Выключить звук' : 'Включить звук';
+    ui.soundBtn.classList.toggle('btn-primary', !state.audioOn);
+    if (!state.audioOn) ui.soundState.textContent = 'Аудио выключено · включите для прослушивания источников';
+  });
+  function setEmissionMode(mode) {
+    const src = selected();
+    if (src.emissionMode === mode) return;
+    src.emissionMode = mode; src.sweep = false;
+    clearField(); renderSources(); say(src.emissionMode === 'pulse' ? 'Нажмите «Выпустить одну волну»' : 'Постоянный звук включён');
+  }
+  function emitPulses(sources) {
+    if (!sources.length) return;
+    clearField();
+    const startTime = state.simTime;
+    for (const src of sources) src.pulseStartTime = startTime;
+    if (!state.running) document.getElementById('pauseBtn').click();
+    const audioStart = state.audioOn && state.audio ? state.audio.ac.currentTime + .015 : undefined;
+    for (const src of sources) playPulseAudio(src, audioStart);
+    say(sources.length === 1 ? `Выпущена одна волна из источника ${String(sources[0].id).padStart(2, '0')}` : `Одновременно выпущены волны из ${sources.length} источников`);
+  }
+  function emitSinglePulse() { const src = selected(); if (src.emissionMode === 'pulse') emitPulses([src]); }
+  function emitAllPulses() { emitPulses(state.sources.filter(src => src.emissionMode === 'pulse')); }
+  ui.emissionMode.addEventListener('change', () => setEmissionMode(ui.emissionMode.value));
+  ui.pulseBtn.addEventListener('click', emitSinglePulse);
+  ui.allPulsesBtn.addEventListener('click', emitAllPulses);
+  ui.mapSourceSelect.addEventListener('change', () => selectSource(Number(ui.mapSourceSelect.value)));
+  ui.mapContinuous.addEventListener('click', () => setEmissionMode('continuous'));
+  ui.mapOneWave.addEventListener('click', () => setEmissionMode('pulse'));
+  ui.mapEmitPulse.addEventListener('click', emitSinglePulse);
+  ui.mapEmitAllPulses.addEventListener('click', emitAllPulses);
+  ui.freq.addEventListener('input', () => { selected().frequency = +ui.freq.value; selected().sweep = false; clearField(); updateReadouts(); });
+  ui.level.addEventListener('input', () => { selected().level = +ui.level.value; state.audibleDirty = true; refreshModeledSensors(); updateReadouts(); });
+  ui.type.addEventListener('change', () => { selected().type = ui.type.value; if (ui.type.value === 'noise') selected().sweep = false; ui.sweepBtn.hidden = selected().device !== 'toneGenerator' || ui.type.value === 'noise' || selected().emissionMode === 'pulse'; clearField(); updateReadouts(); });
+  ui.sweepBtn.addEventListener('click', () => {
+    const src = selected(); if (src.device !== 'toneGenerator') return;
+    src.sweep = !src.sweep; src.sweepElapsed = 0;
+    if (src.sweep) { src.frequency = 80; ui.freq.value = 80; clearField(); }
+    updateReadouts();
+  });
+
+  function addWallAt(x, y, width, height, material) {
+    const thickness = Math.max(width, height);
+    if (![x, y, width, height].every(Number.isFinite) || width <= 0 || height <= 0 || x < 0 || y < 0 || x + width > ROOM_W || y + height > ROOM_H) throw new Error(`Стена должна помещаться на карте ${ROOM_W} × ${ROOM_H} м`);
+    if (!materials[material]) throw new Error('Неизвестный материал');
+    state.walls.push(prepareWall({ x, y, w: width, h: height, material })); rebuildMedium(); updateReadouts();
+    return { layers: state.walls.length, thickness: Number(thickness.toFixed(2)), material: materials[material].name };
+  }
+  function setSource(input) {
+    const src = selected();
+    if (!input || typeof input !== 'object') throw new Error('Передайте параметры источника');
+    if (input.frequency !== undefined) { const max = src.device === 'subwoofer' ? 220 : 1000; if (!Number.isFinite(input.frequency) || input.frequency < 80 || input.frequency > max) throw new Error(`Частота должна быть от 80 до ${max} Гц`); src.frequency = Math.round(input.frequency); src.sweep = false; clearField(); }
+    if (input.level !== undefined) { if (!Number.isFinite(input.level) || input.level < 0 || input.level > 100) throw new Error('Уровень должен быть от 0 до 100'); src.level = Math.round(input.level); state.audibleDirty = true; }
+    if (input.type !== undefined) { if (!['sine', 'square', 'sawtooth', 'noise'].includes(input.type)) throw new Error('Неизвестная форма сигнала'); src.type = input.type; }
+    ui.freq.value = src.frequency; ui.level.value = src.level; ui.type.value = src.type; updateReadouts();
+    return { source: src.id, frequency: src.frequency, level: src.level, type: src.type, wavelength: Number((BASE_C / src.frequency).toFixed(3)) };
+  }
+  function moveSource(input) {
+    if (!input || !Number.isFinite(input.x) || !Number.isFinite(input.y) || input.x < 0 || input.x > ROOM_W || input.y < 0 || input.y > ROOM_H) throw new Error(`Точка должна быть внутри области ${ROOM_W} × ${ROOM_H} м`);
+    selected().x = input.x / ROOM_W; selected().y = input.y / ROOM_H; state.audibleDirty = true; refreshModeledSensors(); updateReadouts(); return { source: selected().id, x: input.x, y: input.y };
+  }
+  function registerWebTools() {
+    const mc = document.modelContext; if (!mc?.registerTool) return;
+    const lifecycle = new AbortController();
+    const tools = [
+      { name: 'set_acoustic_signal', title: 'Настроить выбранный источник', description: 'Изменяет частоту, уровень и форму сигнала выбранного источника.', inputSchema: { type: 'object', properties: { frequency: { type: 'number', minimum: 80, maximum: 1000 }, level: { type: 'number', minimum: 0, maximum: 100 }, type: { type: 'string', enum: ['sine', 'square', 'sawtooth', 'noise'] } }, additionalProperties: false }, annotations: { readOnlyHint: false, untrustedContentHint: false }, execute: setSource },
+      { name: 'add_acoustic_source', title: 'Добавить источник', description: 'Добавляет источник в текущую область в точке x, y в метрах. Копирует параметры выбранного источника.', inputSchema: { type: 'object', properties: { x: { type: 'number', minimum: 0, maximum: 4608 }, y: { type: 'number', minimum: 0, maximum: 3072 } }, required: ['x', 'y'], additionalProperties: false }, annotations: { readOnlyHint: false, untrustedContentHint: false }, execute: input => { if (state.sources.length >= 8) throw new Error('Достигнут лимит восьми источников'); if (!Number.isFinite(input.x) || !Number.isFinite(input.y) || input.x < 0 || input.x > ROOM_W || input.y < 0 || input.y > ROOM_H) throw new Error(`Точка должна быть внутри области ${ROOM_W} × ${ROOM_H} м`); const old = selected(); const id = state.nextId++; state.sources.push({ ...old, id, x: input.x / ROOM_W, y: input.y / ROOM_H, pulseStartTime: null, color: sourceColors[(id - 1) % sourceColors.length], audio: null }); state.audibleDirty = true; state.selected = id; renderSources(); return { source: id, x: input.x, y: input.y }; } },
+      { name: 'add_acoustic_layer', title: 'Добавить звукоизоляционный слой', description: 'Добавляет стену из выбранного материала с заданными координатами и толщиной.', inputSchema: { type: 'object', properties: { x: { type: 'number', minimum: 0, maximum: 4608 }, y: { type: 'number', minimum: 0, maximum: 3072 }, width: { type: 'number', exclusiveMinimum: 0, maximum: 4608 }, height: { type: 'number', exclusiveMinimum: 0, maximum: 3072 }, material: { type: 'string', enum: materialKeys } }, required: ['x', 'y', 'width', 'height', 'material'], additionalProperties: false }, annotations: { readOnlyHint: false, untrustedContentHint: false }, execute: input => addWallAt(input.x, input.y, input.width, input.height, input.material) },
+      { name: 'move_acoustic_source', title: 'Переместить выбранный источник', description: 'Перемещает выбранный источник внутри текущей области карты.', inputSchema: { type: 'object', properties: { x: { type: 'number', minimum: 0, maximum: 4608 }, y: { type: 'number', minimum: 0, maximum: 3072 } }, required: ['x', 'y'], additionalProperties: false }, annotations: { readOnlyHint: false, untrustedContentHint: false }, execute: moveSource }
+    ];
+    for (const tool of tools) { try { Promise.resolve(mc.registerTool(tool, { signal: lifecycle.signal })).catch(() => {}); } catch {} }
+  }
+
+  updateMaterialInfo(); renderSources(); resize(); requestAnimationFrame(draw); registerWebTools();
+})();
+
+</script>
+</body>
+</html>
+
